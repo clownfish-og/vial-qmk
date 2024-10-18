@@ -31,9 +31,7 @@
             "breathing": true,
             "cycle_all": true,
             "cycle_left_right": true,
-            "cycle_up_down": true,
             "gradient_left_right": true,
-            "gradient_up_down": true,
             "solid_color": true
         },
         "center_point": [30, 30],
@@ -43,11 +41,11 @@
         "driver": "ws2812",
         "layout": [
             {"x": 0, "y": 0, "flags": 4},
-            {"x": 12, "y": 20, "flags": 4},
-            {"x": 24, "y": 44, "flags": 4},
-            {"x": 36, "y": 64, "flags": 1},
-            {"x": 48, "y": 64, "flags": 1},
-            {"x": 60, "y": 44, "flags": 1}
+            {"x": 12, "y": 0, "flags": 4},
+            {"x": 24, "y": 0, "flags": 4},
+            {"x": 36, "y": 0, "flags": 1},
+            {"x": 48, "y": 0, "flags": 1},
+            {"x": 60, "y": 0, "flags": 1}
         ],
         "sleep": true
     },
