@@ -17,7 +17,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, RGB_SAI, RGB_VAI, RGB_SPI, RGB_MOD,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          _______, RGB_HUD, _______, RGB_HUI,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   RGB_SAD, RGB_VAD, RGB_SPD, RGB_MO,
+	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   RGB_SAD, RGB_VAD, RGB_SPD, RGB_RMOD,
 	MO(2),   _______, _______, _______,                                                       _______, _______, _______, _______, _______,          RGB_TOG,          RGB_M_P
     ),
 
@@ -41,6 +41,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 #ifdef RGB_MATRIX_ENABLE
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (host_keyboard_led_state().caps_lock && host_keyboard_led_state().num_lock) {
+        for (uint8_t i = led_min; i <= led_max; i++) {
+            if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT) {
+                rgb_matrix_set_color(i, RGB_BLUE);
+            }
+        }
+    }
+        return false;
+    if (!host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+        for (uint8_t i = led_min; i <= led_max; i++) {
+            if (g_led_config.flags[i] & LED_FLAG_MODIFIER) {
+				rgb_matrix_set_color(i, RGB_BLUE);
+            }
+        }
+    }
+        return false;
+    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+        for (uint8_t i = led_min; i <= led_max; i++) {
+            if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT || LED_FLAG_MODIFIER) {
+                rgb_matrix_set_color(i, RGB_BLUE);
+            }
+        }
+        return false;
+    }
+    return true;
+}
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case RGB_TOG:
@@ -60,43 +87,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_enable();
             }
             return false;
-    }
-    return true;
-}
-
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) {
-        for (uint8_t i = led_min; i <= led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT) {
-                rgb_matrix_set_color(0, RGB_BLUE);
-				rgb_matrix_set_color(1, RGB_BLUE);
-				rgb_matrix_set_color(2, RGB_BLUE);
-            }
-        }
-        return false;
-    }
-    if (!host_keyboard_led_state().num_lock) {
-        for (uint8_t i = led_min; i <= led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_MODIFIER) {
-				rgb_matrix_set_color(3, RGB_BLUE);
-				rgb_matrix_set_color(4, RGB_BLUE);
-                rgb_matrix_set_color(5, RGB_BLUE);
-            }
-        }
-        return false;
-    }
-    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-        for (uint8_t i = led_min; i <= led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT || LED_FLAG_MODIFIER) {
-                rgb_matrix_set_color(0, RGB_BLUE);
-				rgb_matrix_set_color(1, RGB_BLUE);
-				rgb_matrix_set_color(2, RGB_BLUE);
-				rgb_matrix_set_color(3, RGB_BLUE);
-				rgb_matrix_set_color(4, RGB_BLUE);
-                rgb_matrix_set_color(5, RGB_BLUE);
-            }
-        }
-        return false;
     }
     return true;
 }
