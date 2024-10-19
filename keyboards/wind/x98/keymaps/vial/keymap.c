@@ -72,21 +72,46 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 /*
 Trying something simpler for indicators
 */
-
-void rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) {
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
         for (uint8_t i = led_min; i <= led_max; i++) {
-            if (g_led_config.flags[i] & LED_FLAG_KEYLIGHT) {
-                rgb_matrix_set_color(0, RGB_RED);
-				rgb_matrix_set_color(1, RGB_RED);
-				rgb_matrix_set_color(2, RGB_RED);
-				rgb_matrix_set_color(3, RGB_RED);
-				rgb_matrix_set_color(4, RGB_RED);
-                rgb_matrix_set_color(5, RGB_RED);
+            if (g_led_config.flags[i] & LED_FLAG_INDICATOR) {
+                rgb_matrix_set_color(0, RGB_PURPLE);
+				rgb_matrix_set_color(1, RGB_PURPLE);
+				rgb_matrix_set_color(2, RGB_PURPLE);
+				rgb_matrix_set_color(3, RGB_PURPLE);
+				rgb_matrix_set_color(4, RGB_PURPLE);
+                rgb_matrix_set_color(5, RGB_PURPLE);
 
             }
         }
     }
+    else if (!host_keyboard_led_state().num_lock) {
+        for (uint8_t i = led_min; i <= led_max; i++) {
+            if (g_led_config.flags[i] & LED_FLAG_INDICATOR) {
+                rgb_matrix_set_color(0, RGB_WHITE);
+				rgb_matrix_set_color(1, RGB_WHITE);
+				rgb_matrix_set_color(2, RGB_WHITE);
+				rgb_matrix_set_color(3, RGB_WHITE);
+				rgb_matrix_set_color(4, RGB_WHITE);
+                rgb_matrix_set_color(5, RGB_WHITE);
+
+            }
+        }
+    }
+    else if (host_keyboard_led_state().caps_lock) {
+        for (uint8_t i = led_min; i <= led_max; i++) {
+            if (g_led_config.flags[i] & LED_FLAG_INDICATOR) {
+                rgb_matrix_set_color(0, RGB_BLUE);
+				rgb_matrix_set_color(1, RGB_BLUE);
+				rgb_matrix_set_color(2, RGB_BLUE);
+				rgb_matrix_set_color(3, RGB_BLUE);
+				rgb_matrix_set_color(4, RGB_BLUE);
+                rgb_matrix_set_color(5, RGB_BLUE);
+
+            }
+        }
+    }
+        return false;
 }
   #endif
-
