@@ -1,14 +1,10 @@
 # MCU name
-MCU = STM32F103
 
 # Bootloader selection
 #BOOTLOADER = stm32duino
-BOOTLOADER = uf2boot
 # Build Options
 #   change yes to no to disable
 #
-BOOTMAGIC_ENABLE = yes       # Virtual DIP switch configuration
-MOUSEKEY_ENABLE = no       # Mouse keys
 EXTRAKEY_ENABLE = yes       # Audio control and System control
 CONSOLE_ENABLE = no        # Console for debug
 COMMAND_ENABLE = no        # Commands for debug and configuration
@@ -33,8 +29,6 @@ OPT_DEFS += -DCORTEX_ENABLE_WFI_IDLE=TRUE
 VIAL_INSECURE = yes    #禁用启动VIAL恶意刷新固件的按键
 
 #QMK_SETTINGS = no
-LTO_ENABLE = yes
 #ALLOW_WARNINGS = yes
 RGB_MATRIX_ENABLE = yes
-RGB_MATRIX_DRIVER = ws2812
 #WS2812_DRIVER = pwm

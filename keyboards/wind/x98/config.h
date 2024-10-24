@@ -4,11 +4,6 @@
 
 /* USB Device descriptor parameter */
 /*
-#define VENDOR_ID       0x3801
-#define PRODUCT_ID      0x3802
-#define DEVICE_VER      0x0001
-#define MANUFACTURER    Vial
-#define PRODUCT         xr2
 */
 /* key matrix size */
 #define MATRIX_ROWS 6
@@ -16,8 +11,6 @@
 
 #define MATRIX_ROW_PINS {  B15, B10, B9,  A15, B1,  B8 }
 #define MATRIX_COL_PINS {  A3,  A2,  A1,  A0,  A4,  A5,  B11,  A7,  B0,  B12, B13, B14, B4, B5, B6, B7,  A8, A9, A10, B3}
-#define DIODE_DIRECTION COL2ROW
-#define DEBOUNCE 2
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
 
@@ -29,7 +22,6 @@
 #define LOCKING_RESYNC_ENABLE
 
 /* Use 1000hz polling */
-#define USB_POLLING_INTERVAL_MS 1
 
 #define SLIDER_PIN C15
 #define MIDI_ADVANCED
@@ -44,7 +36,6 @@
 #define NO_HAPTIC_MOD
 */
 #if defined(RGB_MATRIX_ENABLE)
-#define WS2812_DI_PIN A6
 #define RGBLED_NUM 103
 #define RGB_MATRIX_LED_COUNT 103
 #define DRIVER_LED_TOTAL RGBLED_NUM
@@ -83,20 +74,14 @@
   // RGB Matrix settings
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
-#define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
 #define RGB_MATRIX_SLEEP
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CUSTOM_test_mode
 
 
 /* Limit animations to 62.5 FPS to avoid tearing. (1/.016 = 62.5 FPS). */
 /*
-#define RGB_MATRIX_LED_FLUSH_LIMIT 16
 
 
-#define RGB_MATRIX_SAT_STEP 24
-#define RGB_MATRIX_HUE_STEP 8
-#define RGB_MATRIX_VAL_STEP 16
-#define RGB_MATRIX_SPD_STEP 16
 //#define RGB_TRIGGER_ON_KEYDOWN
 */
 //下面都是RGBRGB 矩阵效果
