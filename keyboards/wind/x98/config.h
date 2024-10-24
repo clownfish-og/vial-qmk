@@ -44,7 +44,7 @@
 #define NO_HAPTIC_MOD
 */
 #if defined(RGB_MATRIX_ENABLE)
-#define RGB_DI_PIN A6
+#define WS2812_DI_PIN A6
 #define RGBLED_NUM 103
 #define RGB_MATRIX_LED_COUNT 103
 #define DRIVER_LED_TOTAL RGBLED_NUM
@@ -60,7 +60,7 @@
 
 //#define RGBLIGHT_LIMIT_VAL 255 /* The maximum brightness level */
 /*
-//#    define RGBLIGHT_SLEEP  //如果已定义，当主机进入睡眠状态时 RGB 灯将关闭 If defined, the RGB lighting will be switched off when the host goes to sleep 
+//#    define RGBLIGHT_SLEEP  //如果已定义，当主机进入睡眠状态时 RGB 灯将关闭 If defined, the RGB lighting will be switched off when the host goes to sleep
 ///////////////#if defined(RGBLIGHT_ENABLE)
 //#    define RGBLIGHT_ANIMATIONS                //启用所有其他动画模式。（弃用）
 #    define RGBLIGHT_EFFECT_ALTERNATING          //启用交替动画模式。
@@ -73,18 +73,18 @@
 #    define RGBLIGHT_EFFECT_SNAKE                //启用蛇动画模式。
 #    define RGBLIGHT_EFFECT_STATIC_GRADIENT      //启用静态渐变模式。
 #    define RGBLIGHT_EFFECT_TWINKLE              //启用闪烁动画模式。
- //  #define RGBLIGHT_LIMIT_VAL 255   // The maximum brightness level 
+ //  #define RGBLIGHT_LIMIT_VAL 255   // The maximum brightness level
 ////////////////////#endif  // RGBLIGHT_ENABLE
 */
 
- 
+
 
 
   // RGB Matrix settings
 #define RGB_MATRIX_FRAMEBUFFER_EFFECTS
 #define RGB_MATRIX_KEYPRESSES
 #define RGB_MATRIX_MAXIMUM_BRIGHTNESS 255
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
+#define RGB_MATRIX_SLEEP
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CUSTOM_test_mode
 
 
@@ -97,7 +97,7 @@
 #define RGB_MATRIX_HUE_STEP 8
 #define RGB_MATRIX_VAL_STEP 16
 #define RGB_MATRIX_SPD_STEP 16
-//#define RGB_TRIGGER_ON_KEYDOWN 
+//#define RGB_TRIGGER_ON_KEYDOWN
 */
 //下面都是RGBRGB 矩阵效果
 // RGB Matrix Animation modes. Explicitly enabled   //// RGB 矩阵动画模式。显式启用
