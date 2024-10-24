@@ -36,10 +36,12 @@
         },
         "center_point": [30, 30],
         "default": {
-            "animation": "cycle_left_right"
+            "animation": "cycle_left_right",
+            "hue": 36
         },
         "max_brightness": 255,
         "driver": "ws2812",
+        "hue steps": 16,
         "layout": [
             {"x": 0, "y": 0, "flags": 8},
             {"x": 12, "y": 0, "flags": 8},
