@@ -3,17 +3,20 @@
     "keyboard_name": "x98",
     "maintainer": "sunxkui",
     "bootloader": "uf2boot",
-    "bootmagic": {
-        "enabled": true
-    },
     "build": {
         "lto": true
     },
     "debounce": 2,
     "development_board": "bluepill",
     "diode_direction": "COL2ROW",
-    "mouse_key": {
-        "enabled": false
+    "features": {
+        "bootmagic": true,
+        "command": false,
+        "console": false,
+        "extrakey": true,
+        "mousekey": true,
+        "nkro": true,
+        "rgb_matrix": true
     },
     "processor": "STM32F103",
     "rgb_matrix": {
