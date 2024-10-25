@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 
 #include QMK_KEYBOARD_H
+#include <quantum.h>
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
@@ -67,17 +68,36 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    for (uint8_t i = led_min; i <= led_max; i++) {
-            if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-                rgb_matrix_set_color_all(RGB_PURPLE);
+    if (host_keyboard_led_state().caps_lock) {
+            if (!rgb_matrix_get_flags()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
             }
-            else if (!host_keyboard_led_state().num_lock) {
-                rgb_matrix_set_color_all(RGB_WHITE);
-            }
-            else if (host_keyboard_led_state().caps_lock) {
-                rgb_matrix_set_color_all(RGB_BLUE);
-            }
+        rgb_matrix_set_color_all(RGB_BLUE);
+    } else {
+        if (!rgb_matrix_get_flags()) {
+            rgb_matrix_set_color_all(RGB_BLACK);
+        }
     }
-        return false;
+    if (!host_keyboard_led_state().num_lock) {
+            if (!rgb_matrix_get_flags()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+            }
+        rgb_matrix_set_color_all(RGB_WHITE);
+    } else {
+        if (!rgb_matrix_get_flags()) {
+            rgb_matrix_set_color_all(RGB_BLACK);
+        }
+    }
+    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+            if (!rgb_matrix_get_flags()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+            }
+        rgb_matrix_set_color_all(RGB_PURPLE);
+    } else {
+        if (!rgb_matrix_get_flags()) {
+            rgb_matrix_set_color_all(RGB_BLACK);
+        }
+    }
+    return true;
 }
   #endif
