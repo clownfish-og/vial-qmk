@@ -68,36 +68,18 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    if (host_keyboard_led_state().caps_lock) {
-            if (!rgb_matrix_get_flags()) {
-                rgb_matrix_set_flags(LED_FLAG_ALL);
+            if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+                rgb_matrix_set_color_all(RGB_PURPLE);
             }
-        rgb_matrix_set_color_all(RGB_BLUE);
-    } else {
-        if (!rgb_matrix_get_flags()) {
-            rgb_matrix_set_color_all(RGB_BLACK);
-        }
-    }
-    if (!host_keyboard_led_state().num_lock) {
-            if (!rgb_matrix_get_flags()) {
-                rgb_matrix_set_flags(LED_FLAG_ALL);
+            else if (!host_keyboard_led_state().num_lock) {
+                rgb_matrix_set_color_all(RGB_WHITE);
             }
-        rgb_matrix_set_color_all(RGB_WHITE);
-    } else {
-        if (!rgb_matrix_get_flags()) {
-            rgb_matrix_set_color_all(RGB_BLACK);
-        }
-    }
-    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-            if (!rgb_matrix_get_flags()) {
-                rgb_matrix_set_flags(LED_FLAG_ALL);
+            else if (host_keyboard_led_state().caps_lock) {
+                rgb_matrix_set_color_all(RGB_BLUE);
             }
-        rgb_matrix_set_color_all(RGB_PURPLE);
-    } else {
-        if (!rgb_matrix_get_flags()) {
-            rgb_matrix_set_color_all(RGB_BLACK);
-        }
-    }
-    return true;
+            else if (!rgb_matrix_get_flags()){
+                rgb_matrix_set_color_all(0, 0, 0);
+            }
+        return true;
 }
   #endif
