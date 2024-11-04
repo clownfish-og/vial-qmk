@@ -9,6 +9,11 @@
       "device_version": "0.0.1"
   },
   "lighting": "vialrgb",
+  "customKeycodes": [
+    {"name": "CAPGEN", "title": "Copy All and Paste x5", "shortName": "CAP5"},
+	{"name": "CHROME", "title": "Powertoys Run Chrome Browser", "shortName": "CHRME"},
+	{"name": "EXTEND", "title": "Extend Desktop / Host Monitor", "shortName": "PROJ"}
+	],
   "matrix": {
     "rows": 6,
     "cols": 20
@@ -17,15 +22,15 @@
       "presets": {
         "Default": [0, 1]
       },
-      "labels": [          
-      "Closed_Rghit_Pad_Switch",
+      "labels": [
+      "Closed_Right_Pad_Switch",
       ["Open_Left_Pad_Switch", "Default_Invisible", "Left_Pad_123", "Left_Pad_321"],
       "Split Backspace",
       "ISO Enter",
       "Split Left Shift",
       ["Bottom row",    "6.25U_Space", "7U_Space" ]
     ],
-    "keymap": 
+    "keymap":
     [
   [
     "0,18\n\n\n1,2",
