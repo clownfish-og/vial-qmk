@@ -44,14 +44,7 @@
             "gradient_up_down": true,
             "none": true,
             "rainbow_beacon": true,
-            "solid_color": true,
-            "solid_reactive": true,
-            "solid_reactive_cross": true,
-            "solid_reactive_nexus": true,
-            "solid_reactive_simple": true,
-            "solid_reactive_wide": true,
-            "solid_splash": true,
-            "splash": true
+            "solid_color": true
         },
         "center_point": [32, 32],
         "hue steps": 16,
