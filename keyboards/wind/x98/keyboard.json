@@ -7,7 +7,6 @@
         "lto": true
     },
     "debounce": 2,
-    "development_board": "bluepill",
     "diode_direction": "COL2ROW",
     "features": {
         "bootmagic": true,
@@ -39,7 +38,6 @@
             "animation": "cycle_left_right",
             "hue": 36
         },
-        "max_brightness": 255,
         "driver": "ws2812",
         "hue steps": 16,
         "layout": [
@@ -60,6 +58,7 @@
         "vid": "0x2023"
     },
     "ws2812": {
+        "driver": "pwm",
         "pin": "A6"
     },
     "layouts": {
@@ -96,8 +95,8 @@
                 {"matrix": [1, 10], "x": 10, "y": 1.25},
                 {"matrix": [1, 11], "x": 11, "y": 1.25},
                 {"matrix": [1, 12], "x": 12, "y": 1.25},
-                {"matrix": [1, 13], "x": 13, "y": 1.25},
-                {"matrix": [1, 19], "x": 14, "y": 1.25},
+                {"matrix": [1, 19], "x": 13, "y": 1.25},
+                {"matrix": [1, 13], "x": 14, "y": 1.25},
                 {"matrix": [1, 14], "x": 15.25, "y": 1.25},
                 {"matrix": [1, 15], "x": 16.5, "y": 1.25},
                 {"matrix": [1, 16], "x": 17.5, "y": 1.25},
