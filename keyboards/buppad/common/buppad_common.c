@@ -79,7 +79,7 @@ keycode_string_compressed_t keycode_strings[] = {
     {KEYS, "KEYS"},
     {LIGHTER, "Lighter"},
     {LOVE, "LOVE"},
-    {LUIGIBUP, "LUIGIBUP"}
+    {LUIGIBUP, "LUIGIBUP"},
     {MAPLE, "Maple"},
     {MOOSE, "MOOSE"},
     {NOD, "Nod"},
@@ -97,9 +97,8 @@ keycode_string_compressed_t keycode_strings[] = {
     {SUS, "Sus"},
     {SWEATY, "Sweaty"},
     {THANKS, "THANKS"},
-    {THING, "Thing"},
     {TIEDYE, "TIEDYE"},
-    {TINFOIL, "TINFOIL"}
+    {TINFOIL, "TINFOIL"},
     {TUNE, "TUNE"},
     {UP, "Up"},
     {UWU, "UWU"},
