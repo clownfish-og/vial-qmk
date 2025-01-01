@@ -163,8 +163,6 @@ typedef struct {
     const char *suffix;
 } keycode_string_compressed_t;
 
-bool process_record_bup(uint16_t keycode, keyrecord_t *record);
-
 keycode_string_compressed_t keycode_strings[] = {
     {ABDUCKTION, "AbDUCKtion"},
     {AMNESIA, "Amnesia"},
