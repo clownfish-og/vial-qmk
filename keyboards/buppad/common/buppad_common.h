@@ -36,7 +36,7 @@ enum custom_keycodes {
     CAPGEN8,
     CAPGEN10,
     ABDUCKTION, //first emote
-    ACID,
+    AMNESIA,
     ASCEND,
     ASHDUCKEM,
     AYO,
@@ -59,7 +59,6 @@ enum custom_keycodes {
     CHEERS,
     CHEESE,
     CHEFKISS,
-    CHICK,
     CHILLGUY,
     CLOUDS,
     CROWN,
@@ -74,16 +73,15 @@ enum custom_keycodes {
     DYE,
     EE,
     EXCUSEME,
-    EYE,
     FANCYDUCK,
     FIRE,
     FLUTE,
     FREAKOUT,
     FROG,
-    GLUTES,
     GOLD,
     GOOSE,
     GROGU,
+    GROOVY,
     HEADOUT,
     HEADPHONES,
     HEART,
@@ -95,6 +93,7 @@ enum custom_keycodes {
     KEYS,
     LIGHTER,
     LOVE,
+    LUIGIBUP,
     MAPLE,
     MOOSE,
     NOD,
@@ -103,18 +102,17 @@ enum custom_keycodes {
     RAINBOW,
     RAVE,
     RUMP,
-    SABER,
+    SALT,
     SALUTE,
     SH,
     SLAY,
     SMIRK,
     SMUG,
-    SPOOKY,
     SUS,
     SWEATY,
     THANKS,
-    THING,
     TIEDYE,
+    TINFOIL,
     TUNE,
     UP,
     UWU,
@@ -150,19 +148,6 @@ enum custom_keycodes {
     UNITY,
     VOTENAY,
     VOTEYEA, //last twitch emote
-    BDANCE, //first bex emote
-    BMINGO,
-    BMONKEY,
-    BPUG,
-    BUGH, //last bex emote
-    GBIRDGROOVE, //first groovekitty emote
-    GCATDANCE,
-    GFUNNYCATDANCE,
-    GJAMMIN,
-    GKITTYDAB,
-    GKITTYGROOVE,
-    GNUMBERONE,
-    GRAVEKITTY, //last groovekitty emote
     KCLAP, //first ktulue emote
     KGATO,
     KGGS,
@@ -181,12 +166,6 @@ enum custom_keycodes {
 #define MAX_EMOTE_LEN 32
 #define LAST_BUP_KEYCODE ZELDABUP
 #define BUP_PREFIX "bup"
-#define FIRST_BEX_KEYCODE BDANCE
-#define LAST_BEX_KEYCODE BUGH
-#define BEX_PREFIX "bexfro"
-#define FIRST_GKTY_KEYCODE GBIRDGROOVE
-#define LAST_GKTY_KEYCODE GRAVEKITTY
-#define GKTY_PREFIX "groove21"
 #define FIRST_KTLU_KEYCODE KCLAP
 #define LAST_KTLU_KEYCODE KWELP
 #define KTLU_PREFIX "ktulue"

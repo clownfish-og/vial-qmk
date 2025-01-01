@@ -22,7 +22,7 @@
 
 keycode_string_compressed_t keycode_strings[] = {
     {ABDUCKTION, "AbDUCKtion"},
-    {ACID, "Acid"},
+    {AMNESIA, "Amnesia"},
     {ASCEND, "Ascend"},
     {ASHDUCKEM, "ASHDUCKEM"},
     {AYO, "Ayo"},
@@ -45,7 +45,6 @@ keycode_string_compressed_t keycode_strings[] = {
     {CHEERS, "CHEERS"},
     {CHEESE, "Cheese"},
     {CHEFKISS, "Chefkiss"},
-    {CHICK, "CHICK"},
     {CHILLGUY, "Chillguy"},
     {CLOUDS, "Clouds"},
     {CROWN, "Crown"},
@@ -60,16 +59,15 @@ keycode_string_compressed_t keycode_strings[] = {
     {DYE, "Dye"},
     {EE, "EE"},
     {EXCUSEME, "EXCUSEME"},
-    {EYE, "Eye"},
     {FANCYDUCK, "FANCYDUCK"},
     {FIRE, "Fire"},
     {FLUTE, "FLUTE"},
     {FREAKOUT, "Freakout"},
     {FROG, "FROG"},
-    {GLUTES, "Glutes"},
     {GOLD, "Gold"},
     {GOOSE, "Goose"},
     {GROGU, "Grogu"},
+    {GROOVY, "Groovy"},
     {HEADOUT, "HEADOUT"},
     {HEADPHONES, "HEADPHONES"},
     {HEART, "Heart"},
@@ -81,6 +79,7 @@ keycode_string_compressed_t keycode_strings[] = {
     {KEYS, "KEYS"},
     {LIGHTER, "Lighter"},
     {LOVE, "LOVE"},
+    {LUIGIBUP, "LUIGIBUP"}
     {MAPLE, "Maple"},
     {MOOSE, "MOOSE"},
     {NOD, "Nod"},
@@ -89,18 +88,18 @@ keycode_string_compressed_t keycode_strings[] = {
     {RAINBOW, "RAINBOW"},
     {RAVE, "Rave"},
     {RUMP, "Rump"},
-    {SABER, "SABER"},
+    {SALT, "Salt"},
     {SALUTE, "Salute"},
     {SH, "Sh"},
     {SLAY, "Slay"},
     {SMIRK, "Smirk"},
     {SMUG, "Smug"},
-    {SPOOKY, "Spooky"},
     {SUS, "Sus"},
     {SWEATY, "Sweaty"},
     {THANKS, "THANKS"},
     {THING, "Thing"},
     {TIEDYE, "TIEDYE"},
+    {TINFOIL, "TINFOIL"}
     {TUNE, "TUNE"},
     {UP, "Up"},
     {UWU, "UWU"},
@@ -136,19 +135,6 @@ keycode_string_compressed_t keycode_strings[] = {
     {UNITY, "TwitchUnity"},
     {VOTENAY, "VoteNay"},
     {VOTEYEA, "VoteYea"},
-    {BDANCE, "Dance"},
-    {BMINGO, "Mingo"},
-    {BMONKEY, "Monkey"},
-    {BPUG, "Pug"},
-    {BUGH, "Ugh"},
-    {GBIRDGROOVE, "Birdgroove"},
-    {GCATDANCE, "Catdance2"},
-    {GFUNNYCATDANCE, "Funnycatdance"},
-    {GJAMMIN, "Jammin"},
-    {GKITTYDAB, "Kittydab"},
-    {GKITTYGROOVE, "Kittygroove"},
-    {GNUMBERONE, "Numberone"},
-    {GRAVEKITTY, "Ravekitty"},
     {KCLAP, "Clap"},
     {KGATO, "Gato"},
     {KGGS, "GGs"},
@@ -197,10 +183,6 @@ bool process_record_bup(uint16_t keycode, keyrecord_t *record) {
 
                         if (keycode >= FIRST_EMOTE_KEYCODE && keycode <= LAST_BUP_KEYCODE) {  // Most keycodes use the bup prefix
                             snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BUP_PREFIX, keycode_strings[i].suffix);  // Construct full string with prefix
-                        }else if (keycode >= FIRST_BEX_KEYCODE && keycode <= LAST_BEX_KEYCODE) {   // Handle Bex keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", BEX_PREFIX, keycode_strings[i].suffix);
-                        }else if (keycode >= FIRST_GKTY_KEYCODE && keycode <= LAST_GKTY_KEYCODE) {  // Handle GrooveKitty keycodes
-                            snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", GKTY_PREFIX, keycode_strings[i].suffix);
                         }else if (keycode >= FIRST_KTLU_KEYCODE && keycode <= LAST_KTLU_KEYCODE) {  // Handle Ktulue keycodes
                             snprintf(emote_buffer, sizeof(emote_buffer), "%s%s", KTLU_PREFIX, keycode_strings[i].suffix);
                         } else {

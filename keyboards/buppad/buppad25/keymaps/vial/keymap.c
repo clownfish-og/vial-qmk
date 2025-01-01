@@ -19,7 +19,7 @@
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        TO(1),      CHEESE,     EYE,        GLUTES,     DUCKDANCE,
+        TO(1),      CHEESE,     CHILLGUY,   FLUTE,      DUCKDANCE,
         DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
         PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
         BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
@@ -27,24 +27,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [1] = LAYOUT(
         TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
-        THING,      DONUT,      DYE,        SMIRK,      MAPLE,
-        RUMP,       ACID,       CLOUDS,     WATER,      WINK,
+        KGLUTES,    DONUT,      DYE,        SMIRK,      MAPLE,
+        RUMP,       GROOVY,     CLOUDS,     WATER,      WINK,
         BALLOON,    HEART,      ASCEND,     JELLY,      PLUG,
         RAVE,       CROWN,      TIEDYE,     DRAGON,     KC_ENT
     ),
     [2] = LAYOUT(
         TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
-        DUCKHEAD,   WIZ,        CHEFKISS,   CHILLGUY,    BIGBRAIN,
+        DUCKHEAD,   WIZ,        CHEFKISS,   SUS,        BIGBRAIN,
         CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
-        BUPS,       BROC,       BUPWAD,     SPOOKY,     ZELDABUP,
+        BUPS,       BROC,       BUPWAD,     LUIGIBUP,   ZELDABUP,
         AYO,        ID,         SH,         EE,         KC_ENT
     ),
     [3] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(5),      TO(4),
-        BASSFACE,   BOB,        SABER,      UWU,        UP,
+        BASSFACE,   BOB,        SALT,       UWU,        UP,
         NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
         HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
-        FLUTE,      FIRE,       CHEERS,     KEYS,       KC_ENT
+        TUNE,       FIRE,       CHEERS,     KEYS,       KC_ENT
     ),
     [4] = LAYOUT(
         TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
