@@ -3,5 +3,3 @@ VIAL_ENABLE = yes
 VIALRGB_ENABLE = yes
 VIAL_INSECURE = yes
 
-VPATH += keyboards/buppad/common
-SRC += buppad_common.cw
