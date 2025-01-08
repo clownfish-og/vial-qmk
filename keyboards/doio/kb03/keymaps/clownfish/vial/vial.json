@@ -1,0 +1,58 @@
+{
+  "name": "KB03-01",
+  "vendorId": "0xD010",
+  "productId": "0x3011",
+  "lighting": "vialrgb",
+  "customKeycodes": [
+    {"name": "SIMPLGT", "title": "Custom Light Mode Switching", "shortName": "LGT"},
+	{"name": "PROJECT", "title": "Switch Host Monitor", "shortName": "PROJ"},
+	{"name": "CHROME", "title": "Launch Chrome with powertoys run", "shortName": "CHRM"}
+	],
+  "matrix": {"rows": 1, "cols": 5},
+  "layouts": {
+    "keymap": [
+        [
+          {
+            "x": 0.5
+          },
+          "0,3"
+        ],
+        [
+            {
+              "y": 0.25
+            },
+          "0,0",
+          "0,1",
+          "0,2"
+        ],
+        [
+          {
+            "y": 0.25,
+            "x": 0.5
+          },
+          "0,0\n\n\n\n\n\n\n\n\ne",
+          "0,1\n\n\n\n\n\n\n\n\ne"
+        ],
+        [
+          {
+            "x": 1
+          },
+          "0,4"
+        ],
+        [
+          {
+            "x": 0.25,
+            "y": 0.25,
+            "w": 1.25,
+            "h": 1.25
+          },
+          "1,0\n\n\n\n\n\n\n\n\ne",
+          {
+            "w": 1.25,
+            "h": 1.25
+          },
+          "1,1\n\n\n\n\n\n\n\n\ne"
+        ]
+      ]
+    }
+}
