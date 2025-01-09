@@ -62,18 +62,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 switch(rgb_matrix_get_mode()) {
                     case RGB_MATRIX_GRADIENT_UP_DOWN:
                         rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                        rgb_matrix_sethsv(180, 255, 200);
                         break;
                     case RGB_MATRIX_SOLID_COLOR:
                         rgb_matrix_mode(RGB_MATRIX_BREATHING);
+                        rgb_matrix_sethsv(180, 255, 200);
                         break;
                     case RGB_MATRIX_BREATHING:
-                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        rgb_matrix_mode(RGB_MATRIX_DUAL_BEACON);
+                        rgb_matrix_sethsv(127, 255, 200);
                         break;
-                    case RGB_MATRIX_CYCLE_UP_DOWN:
+                    case RGB_MATRIX_DUAL_BEACON:
                         rgb_matrix_mode(RGB_MATRIX_GRADIENT_UP_DOWN);
+                        rgb_matrix_sethsv(52, 255, 200);
                         break;
                     default:
-                        rgb_matrix_mode(RGB_MATRIX_CYCLE_UP_DOWN);
+                        rgb_matrix_mode(RGB_MATRIX_DUAL_BEACON);
+                        rgb_matrix_sethsv(127, 255, 200);
                         break;
                     }
             }
@@ -85,7 +90,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case CHROME:
             if (record->event.pressed) {
-                SEND_STRING(SS_LALT(" ") SS_DELAY(150) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
+                SEND_STRING(SS_LALT(" ") SS_DELAY(200) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
             }
             return false;
         default:

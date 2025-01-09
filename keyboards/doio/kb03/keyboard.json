@@ -62,7 +62,7 @@
         },
         "center_point": [32, 32],
         "default": {
-            "animation": "cycle_up_down"
+            "animation": "dual_beacon"
         },
         "driver": "ws2812",
         "layout": [
