@@ -48,26 +48,26 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    hsv_t hsv = {0, 255, 100};
+    HSV hsv = {0, 255, 100};
     switch (get_highest_layer(layer_state)) {
         case 0:
-            hsv = (hsv_t){HSV_RED};
+            hsv = (HSV){HSV_RED};
             break;
         case 1:
-            hsv = (hsv_t){HSV_GREEN};
+            hsv = (HSV){HSV_GREEN};
             break;
         case 2:
-            hsv = (hsv_t){HSV_BLUE};
+            hsv = (HSV){HSV_BLUE};
             break;
         case 3:
-            hsv = (hsv_t){HSV_WHITE};
+            hsv = (HSV){HSV_WHITE};
             break;
         default:
-            hsv = (hsv_t){HSV_YELLOW};
+            hsv = (HSV){HSV_YELLOW};
             break;
     }
     hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
-    rgb_t rgb = hsv_to_rgb(hsv);
+    RGB rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
 }

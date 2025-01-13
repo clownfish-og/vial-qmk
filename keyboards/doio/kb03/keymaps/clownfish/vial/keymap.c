@@ -5,58 +5,32 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
-bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_user(keycode, record)) { return false; }
-    switch (keycode) {
-        case UG_TOGG:
-            if (record->event.pressed) {
-                switch (rgb_matrix_get_flags()) {
-                    case LED_FLAG_ALL: {
-                        rgb_matrix_set_flags(LED_FLAG_NONE);
-                        rgb_matrix_set_color_all(0, 0, 0);
-                    } break;
-                    default: {
-                        rgb_matrix_set_flags(LED_FLAG_ALL);
-                    } break;
-                }
-            }
-            if (!rgb_matrix_is_enabled()) {
-                rgb_matrix_set_flags(LED_FLAG_ALL);
-                rgb_matrix_enable();
-            }
-            return false;
-    }
-    return true;
-}
-
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    hsv_t hsv = {0, 255, 200};
+    HSV hsv = {0, 255, 200};
 
     uint8_t active_layer = get_highest_layer(layer_state);
 
     switch (active_layer) {
         case 0:
-            hsv = (hsv_t){0, 0, 100}; // Layer 0: WHITE
+            hsv = (HSV){0, 0, 100}; // Layer 0: WHITE
             break;
         case 1:
-            hsv = (hsv_t){85, 255, 100}; // Layer 1: GREEN
+            hsv = (HSV){85, 255, 100}; // Layer 1: GREEN
             break;
         case 2:
-            hsv = (hsv_t){169, 255, 100}; // Layer 2: BLUE
+            hsv = (HSV){169, 255, 100}; // Layer 2: BLUE
             break;
         case 3:
-            hsv = (hsv_t){30, 255, 100}; // Layer 3: YELLOW
+            hsv = (HSV){30, 255, 100}; // Layer 3: YELLOW
             break;
         default:
-            hsv = (hsv_t){0, 255, 100}; // err: RED
+            hsv = (HSV){0, 255, 100}; // err: RED
             break;
     }
 
     hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
-    rgb_t rgb = hsv_to_rgb(hsv);
+    RGB rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
-    return false;
-}
     return false;
 }
 
@@ -104,6 +78,23 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CHROME:
             if (record->event.pressed) {
                 SEND_STRING(SS_LALT(" ") SS_DELAY(150) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
+            }
+            return false;
+        case UG_TOGG:
+            if (record->event.pressed) {
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                    } break;
+                }
+            }
+            if (!rgb_matrix_is_enabled()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+                rgb_matrix_enable();
             }
             return false;
         default:
