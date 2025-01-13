@@ -1,11 +1,11 @@
 # doio/kb03
 
-![doio/kb03](imgur.com image replace me!)
+![doio/kb03](https://i.imgur.com/bnlDpkY.png)
 
 QMK for Megalodon DOIO Dual Layer Knob 3 Key macropad.
 
 * Keyboard Maintainer: [clownfish-og](https://github.com/clownfish-og)
-* Hardware Supported: DOIO KB03-01
+* Hardware Supported: DOIO KB03-01 using APM32F103CBT6 (clone STM32F103CBT6)
 * Hardware Availability: https://www.keebmonkey.com/products/megalodon-dual-layer-knob-macro-pad
 
 Make example for this keyboard (after setting up your build environment):

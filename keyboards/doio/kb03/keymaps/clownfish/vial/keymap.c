@@ -5,45 +5,58 @@
 
 #ifdef RGB_MATRIX_ENABLE
 
+bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
+    if (!process_record_user(keycode, record)) { return false; }
+    switch (keycode) {
+        case UG_TOGG:
+            if (record->event.pressed) {
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                    } break;
+                }
+            }
+            if (!rgb_matrix_is_enabled()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+                rgb_matrix_enable();
+            }
+            return false;
+    }
+    return true;
+}
+
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    HSV hsv = {0, 255, 200};
+    hsv_t hsv = {0, 255, 200};
 
     uint8_t active_layer = get_highest_layer(layer_state);
 
     switch (active_layer) {
         case 0:
-            hsv = (HSV){0, 0, 100}; // Layer 0: WHITE
+            hsv = (hsv_t){0, 0, 100}; // Layer 0: WHITE
             break;
         case 1:
-            hsv = (HSV){85, 255, 100}; // Layer 1: GREEN
+            hsv = (hsv_t){85, 255, 100}; // Layer 1: GREEN
             break;
         case 2:
-            hsv = (HSV){169, 255, 100}; // Layer 2: BLUE
+            hsv = (hsv_t){169, 255, 100}; // Layer 2: BLUE
             break;
         case 3:
-            hsv = (HSV){30, 255, 100}; // Layer 3: YELLOW
+            hsv = (hsv_t){30, 255, 100}; // Layer 3: YELLOW
             break;
         default:
-            hsv = (HSV){0, 255, 100}; // err: RED
+            hsv = (hsv_t){0, 255, 100}; // err: RED
             break;
     }
 
-    if (rgb_matrix_get_val() >= 100) {
-        hsv.v = 100;
-    } else if (rgb_matrix_get_val() <= 30) {
-        hsv.v = 30;
-    } else {
-        hsv.v = rgb_matrix_get_val();
-    }
-
-    RGB rgb = hsv_to_rgb(hsv);
-
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-        }
-    }
-
+    hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
+    rgb_t rgb = hsv_to_rgb(hsv);
+    rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
+    return false;
+}
     return false;
 }
 
@@ -90,7 +103,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case CHROME:
             if (record->event.pressed) {
-                SEND_STRING(SS_LALT(" ") SS_DELAY(200) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
+                SEND_STRING(SS_LALT(" ") SS_DELAY(150) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
             }
             return false;
         default:
@@ -100,22 +113,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
-        TO(1),  RGB_HUI,   SIMPLGT,  RGB_SAI,   KC_RSFT
+        TO(1),   UG_HUEU,  SIMPLGT,  UG_SATU,   KC_RSFT
     ),
     [1] = LAYOUT(
         TO(2),   KC_ENT,   C(KC_C), C(S(KC_V)), C(KC_Z)
     ),
     [2] = LAYOUT(
-        TO(3),   CHROME,   RGB_TOG,  G(KC_D),   PROJECT
+        TO(3),   CHROME,   UG_TOGG,  G(KC_D),   PROJECT
     ),
     [3] = LAYOUT(
-        TO(0),  KC_WBAK,   KC_WHOM,  KC_WFWD,   KC_MPLY
+        TO(0),   KC_WBAK,  KC_WHOM,  KC_WFWD,   KC_MPLY
     )
 };
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [0] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI), ENCODER_CCW_CW(RGB_RMOD, RGB_MOD) },
+    [0] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(UG_PREV, UG_NEXT) },
     [1] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),  ENCODER_CCW_CW(KC_WH_U, KC_WH_D) },
     [2] = { ENCODER_CCW_CW(KC_BRID, KC_BRIU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [3] = { ENCODER_CCW_CW(KC_MRWD, KC_MFFD),  ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },

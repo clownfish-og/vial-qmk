@@ -1,6 +1,6 @@
 {
     "manufacturer": "DOIO",
-    "keyboard_name": "KB03-01v1",
+    "keyboard_name": "KB03-01",
     "maintainer": "clownfish-og",
     "bootloader": "stm32duino",
     "diode_direction": "COL2ROW",
@@ -12,8 +12,6 @@
     },
     "features": {
         "bootmagic": true,
-        "command": false,
-        "console": false,
         "encoder": true,
         "extrakey": true,
         "mousekey": true,

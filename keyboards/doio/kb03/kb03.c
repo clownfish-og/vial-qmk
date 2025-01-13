@@ -1,4 +1,5 @@
-/* Copyright (C) 2024 @clownfish-og
+/* Copyright (C) 2025 DOIO
+ * Copyright (C) 2025 ClownFish (@clownfish-og)
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +22,7 @@
 bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_user(keycode, record)) { return false; }
     switch (keycode) {
-        case RGB_TOG:
+        case RM_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -47,49 +48,27 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    HSV hsv = {0, 255, 200};
-
-    // Determine the active layer
-    uint8_t active_layer = get_highest_layer(layer_state);
-
-    // Set HSV values based on the active layer
-    switch (active_layer) {
+    hsv_t hsv = {0, 255, 100};
+    switch (get_highest_layer(layer_state)) {
         case 0:
-            hsv = (HSV){0, 255, 100}; // Layer 0: RED
+            hsv = (hsv_t){HSV_RED};
             break;
         case 1:
-            hsv = (HSV){85, 255, 100}; // Layer 1: GREEN
+            hsv = (hsv_t){HSV_GREEN};
             break;
         case 2:
-            hsv = (HSV){169, 255, 100}; // Layer 2: BLUE
+            hsv = (hsv_t){HSV_BLUE};
             break;
         case 3:
-            hsv = (HSV){0, 0, 100}; // Layer 3: WHITE
+            hsv = (hsv_t){HSV_WHITE};
             break;
         default:
-            hsv = (HSV){30, 255, 100}; // other layers or err: YELLOW
+            hsv = (hsv_t){HSV_YELLOW};
             break;
     }
-
-    // Ensure value (brightness) consistency within range
-    if (rgb_matrix_get_val() >= 100) {
-        hsv.v = 100;
-    } else if (rgb_matrix_get_val() <= 30) {
-        hsv.v = 30;
-    } else {
-        hsv.v = rgb_matrix_get_val();
-    }
-
-    // Convert HSV to RGB
-    RGB rgb = hsv_to_rgb(hsv);
-
-    // Set LEDs with 'indicator' flag
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-        }
-    }
-
+    hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
+    rgb_t rgb = hsv_to_rgb(hsv);
+    rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
 }
 
