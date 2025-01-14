@@ -66,7 +66,7 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
             hsv = (HSV){HSV_YELLOW};
             break;
     }
-    hsv.v = (rgb_matrix_get_val() >= 100) ? 100 : (rgb_matrix_get_val() <= 30) ? 30 : rgb_matrix_get_val();
+    hsv.v     = (rgb_matrix_get_val() * 70 / 200) + 30; //set indicator brightness range 30-100, vary based on RGB Matrix brightness
     RGB rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;

@@ -28,22 +28,9 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             break;
     }
 
-    if (rgb_matrix_get_val() >= 100) {
-        hsv.v = 100;
-    } else if (rgb_matrix_get_val() <= 30) {
-        hsv.v = 30;
-    } else {
-        hsv.v = rgb_matrix_get_val();
-    }
-
+    hsv.v   = (rgb_matrix_get_val() * 70 / 200) + 30; //set indicator brightness range 30-100, vary based on RGB Matrix brightness
     RGB rgb = hsv_to_rgb(hsv);
-
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_INDICATOR
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-        }
-    }
-
+    rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
 }
 

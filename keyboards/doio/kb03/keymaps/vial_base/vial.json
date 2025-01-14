@@ -3,11 +3,6 @@
   "vendorId": "0xD010",
   "productId": "0x3011",
   "lighting": "vialrgb",
-  "customKeycodes": [
-    {"name": "SIMPLGT", "title": "Custom Light Mode Switching", "shortName": "LGT"},
-	{"name": "PROJECT", "title": "Switch Host Monitor", "shortName": "PROJ"},
-	{"name": "CHROME", "title": "Launch Chrome with powertoys run", "shortName": "CHRM"}
-	],
   "matrix": {"rows": 1, "cols": 5},
   "layouts": {
     "keymap": [
