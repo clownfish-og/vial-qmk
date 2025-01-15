@@ -9,11 +9,6 @@
         "device_version": "0.0.1"
     },
     "lighting": "vialrgb",
-    "customKeycodes": [
-        {"name": "CAPGEN", "title": "Copy All and Paste x5", "shortName": "CAP5"},
-	    {"name": "CHROME", "title": "Powertoys Run Chrome Browser", "shortName": "CHRME"},
-	    {"name": "EXTEND", "title": "Extend Desktop / Host Monitor", "shortName": "PROJ"}
-	],
     "matrix": {
         "rows": 6,
         "cols": 20
