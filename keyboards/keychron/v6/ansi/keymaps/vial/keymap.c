@@ -17,8 +17,21 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
+enum indicator_keycodes {
+    CAPSLKD = 0x7E0B,
+    CAPSLKU,
+    NUMLKOD,
+    NUMLKOU,
+    COMBLKD,
+    COMBLKU
+};
 
-// clang-format off
+enum my_keycodes {
+    CAPGEN = 0x7E11,
+    CHROME,
+    EXTEND,
+    RMP
+};
 
 enum layers{
   MAC_BASE,
@@ -27,77 +40,55 @@ enum layers{
   WIN_FN
 };
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_ansi_108(
-        KC_ESC,             KC_BRID,  KC_BRIU,  KC_MCTL,  KC_LPAD,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  KC_SNAP,  KC_SIRI,  RGB_MOD,  KC_F13,   KC_F14,   KC_F15,   KC_F16,
+        KC_ESC,             KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   KC_PSCR,  KC_SCRL,  KC_PAUSE, CHROME,   KC_MUTE,  G(KC_D),  KC_EQL,
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,     KC_BSPC,  KC_INS,   KC_HOME,  KC_PGUP,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,    KC_BSLS,  KC_DEL,   KC_END,   KC_PGDN,  KC_P7,    KC_P8,    KC_P9,
         KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,              KC_ENT,                                 KC_P4,    KC_P5,    KC_P6,    KC_PPLS,
         KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,              KC_RSFT,            KC_UP,              KC_P1,    KC_P2,    KC_P3,
-        KC_LCTL,  KC_LOPTN, KC_LCMMD,                               KC_SPC,                                 KC_RCMMD, KC_ROPTN, MO(MAC_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
+        KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
     [MAC_FN] = LAYOUT_ansi_108(
-        _______,            KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   _______,  _______,  RGB_TOG,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                _______,  _______,  _______,  _______,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            _______,  _______,  _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,            _______,  _______),
+        _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  UG_TOGG,  _______,  _______,  _______,  CAPGEN,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  COMBLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
+        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  COMBLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
+        _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
+        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
+        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
     [WIN_BASE] = LAYOUT_ansi_108(
-        KC_ESC,             KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   KC_PSCR,  KC_CRTA,  RGB_MOD,  _______,  _______,  _______,  _______,
+        KC_ESC,             KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   KC_PSCR,  KC_SCRL,  KC_PAUSE, CHROME,   KC_MUTE,  G(KC_D),  KC_EQL,
         KC_GRV,   KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,     KC_BSPC,  KC_INS,   KC_HOME,  KC_PGUP,  KC_NUM,   KC_PSLS,  KC_PAST,  KC_PMNS,
         KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,    KC_BSLS,  KC_DEL,   KC_END,   KC_PGDN,  KC_P7,    KC_P8,    KC_P9,
         KC_CAPS,  KC_A,     KC_S,     KC_D,     KC_F,     KC_G,     KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,              KC_ENT,                                 KC_P4,    KC_P5,    KC_P6,    KC_PPLS,
         KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,              KC_RSFT,            KC_UP,              KC_P1,    KC_P2,    KC_P3,
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
     [WIN_FN] = LAYOUT_ansi_108(
-        _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  RGB_VAD,  RGB_VAI,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  RGB_TOG,  _______,  _______,  _______,  _______,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        RGB_TOG,  RGB_MOD,  RGB_VAI,  RGB_HUI,  RGB_SAI,  RGB_SPI,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,  _______,  _______,
-        _______,  RGB_RMOD, RGB_VAD,  RGB_HUD,  RGB_SAD,  RGB_SPD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                _______,  _______,  _______,  _______,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            _______,  _______,  _______,
-        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  _______,            _______,  _______),
+        _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  UG_TOGG,  _______,  _______,  _______,  CAPGEN,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  COMBLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
+        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  COMBLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
+        _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
+        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
+        _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
 };
 
 // clang-format on
-enum indicator_keycodes {
-    CAPSLKU = 0x7E0B,
-    CAPSLKD,
-    NUMLKOU,
-    NUMLKOD,
-    COMBLKU,
-    COMBLKD
 
-};
-
-#define RGB_COLOR_COUNT 16 // Adjust this number based on the number of RGB colors defined
 typedef struct {
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-} rgb_color;
+    uint8_t caps_hue;
+    uint8_t num_hue;
+    uint8_t comb_hue;
+} indicator_hues_t;
 
-const rgb_color colors[RGB_COLOR_COUNT] = {
-    {RGB_RED},
-    {RGB_CORAL},
-    {RGB_ORANGE},
-    {RGB_GOLD},
-    {RGB_YELLOW},
-    {RGB_CHARTREUSE},
-    {RGB_GREEN},
-    {RGB_SPRINGGREEN},
-    {RGB_CYAN},
-    {RGB_AZURE},
-    {RGB_BLUE},
-    {RGB_PURPLE},
-    {RGB_MAGENTA},
-    {RGB_PINK},
-    {RGB_WHITE},
-    {RGB_BLACK}
-};
+static indicator_hues_t indicator_hues = {170, 0, 0};
 
-uint8_t caps_lock_color = 10;
-uint8_t num_lock_color = 14;
-uint8_t combo_color = 7;
+typedef struct {
+    uint8_t caps_sat;
+    uint8_t num_sat;
+    uint8_t comb_sat;
+} indicator_sat_t;
+
+static indicator_sat_t indicator_sat = {255, 0, 255};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -105,8 +96,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
     }
 
+    bool shifted = get_mods() & MOD_MASK_SHIFT;
+
     switch (keycode) {
-        case RGB_TOG:
+        case UG_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -125,55 +118,116 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case CAPSLKU:
             if (record->event.pressed) {
-                caps_lock_color = (caps_lock_color + 1) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.caps_sat = (indicator_sat.caps_sat + RGB_MATRIX_SAT_STEP) % 256;
+                } else {
+                     indicator_hues.caps_hue = (indicator_hues.caps_hue + RGB_MATRIX_HUE_STEP) % 256;
+                };
             }
             return false;
         case CAPSLKD:
             if (record->event.pressed) {
-                caps_lock_color = (caps_lock_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.caps_sat = (indicator_sat.caps_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                } else {
+                     indicator_hues.caps_hue = (indicator_hues.caps_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
+                };
             }
             return false;
         case NUMLKOU:
             if (record->event.pressed) {
-                num_lock_color = (num_lock_color + 1) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.num_sat = (indicator_sat.num_sat + RGB_MATRIX_SAT_STEP) % 256;
+                } else {
+                     indicator_hues.num_hue = (indicator_hues.num_hue + RGB_MATRIX_HUE_STEP) % 256;
+                };
             }
             return false;
         case NUMLKOD:
             if (record->event.pressed) {
-                num_lock_color = (num_lock_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.num_sat = (indicator_sat.num_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                } else {
+                     indicator_hues.num_hue = (indicator_hues.num_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
+                };
             }
             return false;
         case COMBLKU:
             if (record->event.pressed) {
-                combo_color = (combo_color + 1) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.comb_sat = (indicator_sat.comb_sat + RGB_MATRIX_SAT_STEP) % 256;
+                } else {
+                    indicator_hues.comb_hue = (indicator_hues.comb_hue + RGB_MATRIX_HUE_STEP) % 256;
+                };
             }
             return false;
         case COMBLKD:
             if (record->event.pressed) {
-                combo_color = (combo_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+                if (shifted) {
+                     indicator_sat.comb_sat = (indicator_sat.comb_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                } else {
+                    indicator_hues.comb_hue = (indicator_hues.comb_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
+                };
+            }
+            return false;
+        case CAPGEN:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvv"));
+            }
+            return false;
+        case CHROME:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LALT(" ") SS_DELAY(200) ">chrome.exe" SS_DELAY(200) SS_TAP(X_ENT));
+            }
+            return false;
+        case EXTEND:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC) );
+            }
+            return false;
+        case RMP:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled())
+                    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
             }
             return false;
     }
-    return true;
+        return true;
 }
 
 #ifdef RGB_MATRIX_ENABLE
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    HSV hsv;
+    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+        hsv.h = indicator_hues.comb_hue;
+        hsv.s = indicator_sat.comb_sat;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (!host_keyboard_led_state().num_lock) {
+        hsv.h = indicator_hues.num_hue;
+        hsv.s = indicator_sat.num_sat;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (host_keyboard_led_state().caps_lock) {
+        hsv.h = indicator_hues.caps_hue;
+        hsv.s = indicator_sat.caps_sat;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (!rgb_matrix_get_flags()) {
+        hsv.h = 0;
+        hsv.s = 0;
+        hsv.v = 0;
+    } else {
+        return false;
+    }
+
+    RGB rgb = hsv_to_rgb(hsv);
+
     for (uint8_t i = led_min; i < led_max; i++) {
-        if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-            rgb_matrix_set_color_all(colors[combo_color].r, colors[combo_color].g, colors[combo_color].b);
-        } else if (!host_keyboard_led_state().num_lock) {
-            rgb_matrix_set_color_all(colors[num_lock_color].r, colors[num_lock_color].g, colors[num_lock_color].b);
-        } else if (host_keyboard_led_state().caps_lock) {
-            rgb_matrix_set_color_all(colors[caps_lock_color].r, colors[caps_lock_color].g, colors[caps_lock_color].b);
-        } else if (!rgb_matrix_get_flags()){
-                rgb_matrix_set_color_all(RGB_BLACK);
-            }
+        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_MODIFIER
+            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        }
     }
     return true;
 }
 #endif
-
 
 void housekeeping_task_user(void) {
     housekeeping_task_keychron();
