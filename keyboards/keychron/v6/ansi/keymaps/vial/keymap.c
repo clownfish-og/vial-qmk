@@ -17,6 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
 
+
 // clang-format off
 
 enum layers{
@@ -58,13 +59,121 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // clang-format on
+enum indicator_keycodes {
+    CAPSLKU = 0x7E0B,
+    CAPSLKD,
+    NUMLKOU,
+    NUMLKOD,
+    COMBLKU,
+    COMBLKD
+
+};
+
+#define RGB_COLOR_COUNT 16 // Adjust this number based on the number of RGB colors defined
+typedef struct {
+    uint8_t r;
+    uint8_t g;
+    uint8_t b;
+} rgb_color;
+
+const rgb_color colors[RGB_COLOR_COUNT] = {
+    {RGB_RED},
+    {RGB_CORAL},
+    {RGB_ORANGE},
+    {RGB_GOLD},
+    {RGB_YELLOW},
+    {RGB_CHARTREUSE},
+    {RGB_GREEN},
+    {RGB_SPRINGGREEN},
+    {RGB_CYAN},
+    {RGB_AZURE},
+    {RGB_BLUE},
+    {RGB_PURPLE},
+    {RGB_MAGENTA},
+    {RGB_PINK},
+    {RGB_WHITE},
+    {RGB_BLACK}
+};
+
+uint8_t caps_lock_color = 10;
+uint8_t num_lock_color = 14;
+uint8_t combo_color = 7;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+
     if (!process_record_keychron(keycode, record)) {
         return false;
     }
+
+    switch (keycode) {
+        case RGB_TOG:
+            if (record->event.pressed) {
+                switch (rgb_matrix_get_flags()) {
+                    case LED_FLAG_ALL: {
+                        rgb_matrix_set_flags(LED_FLAG_NONE);
+                        rgb_matrix_set_color_all(0, 0, 0);
+                    } break;
+                    default: {
+                        rgb_matrix_set_flags(LED_FLAG_ALL);
+                    } break;
+                }
+            }
+            if (!rgb_matrix_is_enabled()) {
+                rgb_matrix_set_flags(LED_FLAG_ALL);
+                rgb_matrix_enable();
+            }
+            return false;
+        case CAPSLKU:
+            if (record->event.pressed) {
+                caps_lock_color = (caps_lock_color + 1) % RGB_COLOR_COUNT;
+            }
+            return false;
+        case CAPSLKD:
+            if (record->event.pressed) {
+                caps_lock_color = (caps_lock_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+            }
+            return false;
+        case NUMLKOU:
+            if (record->event.pressed) {
+                num_lock_color = (num_lock_color + 1) % RGB_COLOR_COUNT;
+            }
+            return false;
+        case NUMLKOD:
+            if (record->event.pressed) {
+                num_lock_color = (num_lock_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+            }
+            return false;
+        case COMBLKU:
+            if (record->event.pressed) {
+                combo_color = (combo_color + 1) % RGB_COLOR_COUNT;
+            }
+            return false;
+        case COMBLKD:
+            if (record->event.pressed) {
+                combo_color = (combo_color - 1 + RGB_COLOR_COUNT) % RGB_COLOR_COUNT;
+            }
+            return false;
+    }
     return true;
 }
+
+#ifdef RGB_MATRIX_ENABLE
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    for (uint8_t i = led_min; i < led_max; i++) {
+        if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+            rgb_matrix_set_color_all(colors[combo_color].r, colors[combo_color].g, colors[combo_color].b);
+        } else if (!host_keyboard_led_state().num_lock) {
+            rgb_matrix_set_color_all(colors[num_lock_color].r, colors[num_lock_color].g, colors[num_lock_color].b);
+        } else if (host_keyboard_led_state().caps_lock) {
+            rgb_matrix_set_color_all(colors[caps_lock_color].r, colors[caps_lock_color].g, colors[caps_lock_color].b);
+        } else if (!rgb_matrix_get_flags()){
+                rgb_matrix_set_color_all(RGB_BLACK);
+            }
+    }
+    return true;
+}
+#endif
+
 
 void housekeeping_task_user(void) {
     housekeeping_task_keychron();

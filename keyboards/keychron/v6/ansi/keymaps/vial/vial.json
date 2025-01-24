@@ -38,7 +38,13 @@
       "title": "Screenshot in macOS",
       "shortName": "SShot"
     },
-    {"name": "Cortana", "title": "Cortana in windows", "shortName": "Cortana"}
+    {"name": "Cortana", "title": "Cortana in windows", "shortName": "Cortana"},
+    {"name": "CAPSLKU", "title": "Caps Lock Indicator color up", "shortName": "Caps+"},
+    {"name": "CAPSLKD", "title": "Caps Lock Indicator color down", "shortName": "Caps-"},
+    {"name": "NUMLKOU", "title": "Num Lock Indicator color up", "shortName": "Num+"},
+    {"name": "NUMLKOD", "title": "Num Lock Indicator color down", "shortName": "Num-"},
+    {"name": "COMBLKU", "title": "Dual Lock Indicator color up", "shortName": "Comb+"},
+    {"name": "COMBLKD", "title": "Dual Lock Indicator color down", "shortName": "Comb-"}
   ],
   "matrix": {"rows": 6, "cols": 20},
   "layouts": {
