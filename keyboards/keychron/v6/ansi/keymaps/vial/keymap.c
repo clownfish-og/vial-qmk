@@ -18,6 +18,20 @@
 #include "keychron_common.h"
 #include <lib/lib8tion/lib8tion.h>
 
+typedef union {
+  uint32_t raw;
+  struct {
+    uint8_t cap_h;
+    uint8_t num_h;
+    uint8_t com_h;
+    uint8_t cap_s;
+    uint8_t num_s;
+    uint8_t com_s;
+  };
+} user_config_t;
+
+user_config_t user_config;
+
 enum indicator_keycodes {
     CAPSLKD = 0x7E0B,
     CAPSLKU,
@@ -75,21 +89,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // clang-format on
 
-typedef struct {
-    uint8_t cap_h;
-    uint8_t num_h;
-    uint8_t com_h;
-} ind_h_t;
 
-static ind_h_t ind_h = {170, 0, 0};
+// Initialize the EEPROM values
+void keyboard_post_init_user(void) {
+    user_config.raw = eeconfig_read_user();
+}
 
-typedef struct {
-    uint8_t cap_s;
-    uint8_t num_s;
-    uint8_t com_s;
-} ind_s_t;
-
-static ind_s_t ind_s = {255, 0, 255};
+void eeconfig_init_user(void) {
+    user_config.raw = 0;
+    user_config.cap_h = 170;
+    user_config.num_h = 0;
+    user_config.com_h = 0;
+    user_config.cap_s = 255;
+    user_config.num_s = 0;
+    user_config.com_s = 255;
+    eeconfig_update_user(user_config.raw);
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -120,55 +135,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPSLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.cap_s = qadd8(ind_s.cap_s, RGB_MATRIX_SAT_STEP);
+                    user_config.cap_s = qadd8(user_config.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.cap_h = (ind_h.cap_h+ RGB_MATRIX_HUE_STEP);
+                    user_config.cap_h = (user_config.cap_h+ RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case CAPSLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.cap_s = qsub8(ind_s.cap_s, RGB_MATRIX_SAT_STEP);
+                    user_config.cap_s = qsub8(user_config.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.cap_h = (ind_h.cap_h - RGB_MATRIX_HUE_STEP);
+                    user_config.cap_h = (user_config.cap_h - RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case NUMLKOU:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.num_s = qadd8(ind_s.num_s, RGB_MATRIX_SAT_STEP);
+                    user_config.num_s = qadd8(user_config.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.num_h = (ind_h.num_h + RGB_MATRIX_HUE_STEP);
+                    user_config.num_h = (user_config.num_h + RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case NUMLKOD:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.num_s = qsub8(ind_s.num_s, RGB_MATRIX_SAT_STEP);
+                    user_config.num_s = qsub8(user_config.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.num_h = (ind_h.num_h - RGB_MATRIX_HUE_STEP);
+                    user_config.num_h = (user_config.num_h - RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case COMBLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.com_s = qadd8(ind_s.com_s, RGB_MATRIX_SAT_STEP);
+                    user_config.com_s = qadd8(user_config.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.com_h = (ind_h.com_h + RGB_MATRIX_HUE_STEP);
+                    user_config.com_h = (user_config.com_h + RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case COMBLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    ind_s.com_s = qsub8(ind_s.com_s, RGB_MATRIX_SAT_STEP);
+                    user_config.com_s = qsub8(user_config.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    ind_h.com_h = (ind_h.com_h - RGB_MATRIX_HUE_STEP);
+                    user_config.com_h = (user_config.com_h - RGB_MATRIX_HUE_STEP);
                 }
+                eeconfig_update_user(user_config.raw);
             }
             return false;
         case CAPGEN:
@@ -200,16 +221,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     HSV hsv;
     if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-        hsv.h = ind_h.com_h;
-        hsv.s = ind_s.com_s;
+        hsv.h = user_config.com_h;
+        hsv.s = user_config.com_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (!host_keyboard_led_state().num_lock) {
-        hsv.h = ind_h.num_h;
-        hsv.s = ind_s.num_s;
+        hsv.h = user_config.num_h;
+        hsv.s = user_config.num_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (host_keyboard_led_state().caps_lock) {
-        hsv.h = ind_h.cap_h;
-        hsv.s = ind_s.cap_s;
+        hsv.h = user_config.cap_h;
+        hsv.s = user_config.cap_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (!rgb_matrix_get_flags()) {
         hsv.h = 0;
