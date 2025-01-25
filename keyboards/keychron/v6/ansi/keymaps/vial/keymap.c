@@ -18,20 +18,7 @@
 #include "keychron_common.h"
 #include <lib/lib8tion/lib8tion.h>
 
-typedef union {
-  uint32_t raw;
-  struct {
-    uint8_t cap_h;
-    uint8_t num_h;
-    uint8_t com_h;
-    uint8_t cap_s;
-    uint8_t num_s;
-    uint8_t com_s;
-  };
-} user_config_t;
-
-user_config_t user_config;
-
+// clang-format off
 enum indicator_keycodes {
     CAPSLKD = 0x7E0B,
     CAPSLKU,
@@ -55,7 +42,6 @@ enum layers{
   WIN_FN
 };
 
-// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [MAC_BASE] = LAYOUT_ansi_108(
         KC_ESC,             KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   KC_PSCR,  KC_SCRL,  KC_PAUSE, CHROME,   KC_MUTE,  G(KC_D),  KC_EQL,
@@ -86,9 +72,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
 };
-
 // clang-format on
 
+typedef union {
+    uint32_t raw;
+    struct {
+        uint8_t cap_h;
+        uint8_t num_h;
+        uint8_t com_h;
+        uint8_t cap_s;
+        uint8_t num_s;
+        uint8_t com_s;
+    };
+} user_config_t;
+
+user_config_t user_config;
 
 // Initialize the EEPROM values
 void keyboard_post_init_user(void) {
@@ -96,7 +94,7 @@ void keyboard_post_init_user(void) {
 }
 
 void eeconfig_init_user(void) {
-    user_config.raw = 0;
+    user_config.raw   = 0;
     user_config.cap_h = 170;
     user_config.num_h = 0;
     user_config.com_h = 0;
@@ -107,7 +105,6 @@ void eeconfig_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-
     if (!process_record_keychron(keycode, record)) {
         return false;
     }
@@ -137,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 if (shifted) {
                     user_config.cap_s = qadd8(user_config.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.cap_h = (user_config.cap_h+ RGB_MATRIX_HUE_STEP);
+                    user_config.cap_h = (user_config.cap_h + RGB_MATRIX_HUE_STEP);
                 }
                 eeconfig_update_user(user_config.raw);
             }
@@ -204,17 +201,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case EXTEND:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC) );
+                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC));
             }
             return false;
         case RMP:
             if (record->event.pressed) {
-                if (rgb_matrix_is_enabled())
-                    rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+                if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
             }
             return false;
     }
-        return true;
+    return true;
 }
 
 #ifdef RGB_MATRIX_ENABLE
