@@ -76,20 +76,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 // clang-format on
 
 typedef struct {
-    uint8_t caps_hue;
-    uint8_t num_hue;
-    uint8_t comb_hue;
-} indicator_hues_t;
+    uint8_t cap_h;
+    uint8_t num_h;
+    uint8_t com_h;
+} ind_h_t;
 
-static indicator_hues_t indicator_hues = {170, 0, 0};
+static ind_h_t ind_h = {170, 0, 0};
 
 typedef struct {
-    uint8_t caps_sat;
-    uint8_t num_sat;
-    uint8_t comb_sat;
-} indicator_sat_t;
+    uint8_t cap_s;
+    uint8_t num_s;
+    uint8_t com_s;
+} ind_s_t;
 
-static indicator_sat_t indicator_sat = {255, 0, 255};
+static ind_s_t ind_s = {255, 0, 255};
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
@@ -120,54 +120,54 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPSLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.caps_sat = qadd8(indicator_sat.caps_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.cap_s = qadd8(ind_s.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.caps_hue = (indicator_hues.caps_hue + RGB_MATRIX_HUE_STEP);
+                    ind_h.cap_h = (ind_h.cap_h+ RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
         case CAPSLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.caps_sat = qsub8(indicator_sat.caps_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.cap_s = qsub8(ind_s.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.caps_hue = (indicator_hues.caps_hue - RGB_MATRIX_HUE_STEP);
+                    ind_h.cap_h = (ind_h.cap_h - RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
         case NUMLKOU:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.num_sat = qadd8(indicator_sat.num_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.num_s = qadd8(ind_s.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.num_hue = (indicator_hues.num_hue + RGB_MATRIX_HUE_STEP);
+                    ind_h.num_h = (ind_h.num_h + RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
         case NUMLKOD:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.num_sat = qsub8(indicator_sat.num_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.num_s = qsub8(ind_s.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.num_hue = (indicator_hues.num_hue - RGB_MATRIX_HUE_STEP);
+                    ind_h.num_h = (ind_h.num_h - RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
         case COMBLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.comb_sat = qadd8(indicator_sat.comb_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.com_s = qadd8(ind_s.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.comb_hue = (indicator_hues.comb_hue + RGB_MATRIX_HUE_STEP);
+                    ind_h.com_h = (ind_h.com_h + RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
         case COMBLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    indicator_sat.comb_sat = qsub8(indicator_sat.comb_sat, RGB_MATRIX_SAT_STEP);
+                    ind_s.com_s = qsub8(ind_s.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.comb_hue = (indicator_hues.comb_hue - RGB_MATRIX_HUE_STEP);
+                    ind_h.com_h = (ind_h.com_h - RGB_MATRIX_HUE_STEP);
                 }
             }
             return false;
@@ -200,16 +200,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     HSV hsv;
     if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-        hsv.h = indicator_hues.comb_hue;
-        hsv.s = indicator_sat.comb_sat;
+        hsv.h = ind_h.com_h;
+        hsv.s = ind_s.com_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (!host_keyboard_led_state().num_lock) {
-        hsv.h = indicator_hues.num_hue;
-        hsv.s = indicator_sat.num_sat;
+        hsv.h = ind_h.num_h;
+        hsv.s = ind_s.num_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (host_keyboard_led_state().caps_lock) {
-        hsv.h = indicator_hues.caps_hue;
-        hsv.s = indicator_sat.caps_sat;
+        hsv.h = ind_h.cap_h;
+        hsv.s = ind_s.cap_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
     } else if (!rgb_matrix_get_flags()) {
         hsv.h = 0;
