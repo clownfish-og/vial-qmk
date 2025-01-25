@@ -16,6 +16,7 @@
 
 #include QMK_KEYBOARD_H
 #include "keychron_common.h"
+#include <lib/lib8tion/lib8tion.h>
 
 enum indicator_keycodes {
     CAPSLKD = 0x7E0B,
@@ -119,55 +120,55 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPSLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.caps_sat = (indicator_sat.caps_sat + RGB_MATRIX_SAT_STEP) % 256;
+                    indicator_sat.caps_sat = qadd8(indicator_sat.caps_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                     indicator_hues.caps_hue = (indicator_hues.caps_hue + RGB_MATRIX_HUE_STEP) % 256;
-                };
+                    indicator_hues.caps_hue = (indicator_hues.caps_hue + RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case CAPSLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.caps_sat = (indicator_sat.caps_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                    indicator_sat.caps_sat = qsub8(indicator_sat.caps_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                     indicator_hues.caps_hue = (indicator_hues.caps_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
-                };
+                    indicator_hues.caps_hue = (indicator_hues.caps_hue - RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case NUMLKOU:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.num_sat = (indicator_sat.num_sat + RGB_MATRIX_SAT_STEP) % 256;
+                    indicator_sat.num_sat = qadd8(indicator_sat.num_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                     indicator_hues.num_hue = (indicator_hues.num_hue + RGB_MATRIX_HUE_STEP) % 256;
-                };
+                    indicator_hues.num_hue = (indicator_hues.num_hue + RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case NUMLKOD:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.num_sat = (indicator_sat.num_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                    indicator_sat.num_sat = qsub8(indicator_sat.num_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                     indicator_hues.num_hue = (indicator_hues.num_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
-                };
+                    indicator_hues.num_hue = (indicator_hues.num_hue - RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case COMBLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.comb_sat = (indicator_sat.comb_sat + RGB_MATRIX_SAT_STEP) % 256;
+                    indicator_sat.comb_sat = qadd8(indicator_sat.comb_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.comb_hue = (indicator_hues.comb_hue + RGB_MATRIX_HUE_STEP) % 256;
-                };
+                    indicator_hues.comb_hue = (indicator_hues.comb_hue + RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case COMBLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                     indicator_sat.comb_sat = (indicator_sat.comb_sat - RGB_MATRIX_SAT_STEP + 256) % 256;
+                    indicator_sat.comb_sat = qsub8(indicator_sat.comb_sat, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indicator_hues.comb_hue = (indicator_hues.comb_hue - RGB_MATRIX_HUE_STEP + 256) % 256;
-                };
+                    indicator_hues.comb_hue = (indicator_hues.comb_hue - RGB_MATRIX_HUE_STEP);
+                }
             }
             return false;
         case CAPGEN:
