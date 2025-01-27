@@ -24,8 +24,8 @@ enum indicator_keycodes {
     CAPSLKU,
     NUMLKOD,
     NUMLKOU,
-    COMBLKD,
-    COMBLKU
+    SCRLLKD,
+    SCRLLKU
 };
 
 enum my_keycodes {
@@ -52,8 +52,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
     [MAC_FN] = LAYOUT_ansi_108(
         _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  UG_TOGG,  _______,  _______,  _______,  CAPGEN,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  COMBLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
-        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  COMBLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  SCRLLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
+        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  SCRLLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
         _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
@@ -66,25 +66,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL,  KC_LWIN,  KC_LALT,                                KC_SPC,                                 KC_RALT,  KC_RWIN,  MO(WIN_FN), KC_RCTL,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_P0,              KC_PDOT,  KC_PENT),
     [WIN_FN] = LAYOUT_ansi_108(
         _______,            KC_BRID,  KC_BRIU,  KC_TASK,  KC_FLXP,  UG_VALD,  UG_VALU,  KC_MPRV,  KC_MPLY,  KC_MNXT,  KC_MUTE,  KC_VOLD,    KC_VOLU,  _______,  _______,  UG_TOGG,  _______,  _______,  _______,  CAPGEN,
-        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  COMBLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
-        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  COMBLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
+        _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  SCRLLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
+        UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  SCRLLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
         _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
         _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
 };
 // clang-format on
 
-#ifdef RGB_MATRIX_ENABLE
-
 // Single Indicator memory layout
-
 typedef struct indicator_t {
         uint8_t cap_h;
         uint8_t num_h;
-        uint8_t com_h;
+        uint8_t scr_h;
         uint8_t cap_s;
         uint8_t num_s;
-        uint8_t com_s;
+        uint8_t scr_s;
     } indicator;
 
 indicator indi;
@@ -95,11 +92,11 @@ _Static_assert(sizeof(indicator) == EECONFIG_USER_DATA_SIZE, "Mismatch in keyboa
 void eeconfig_init_user(void) {
     // Default values
     indi.cap_h = 170;
-    indi.num_h = 0;
-    indi.com_h = 0;
+    indi.num_h = 170;
+    indi.scr_h = 170;
     indi.cap_s = 255;
-    indi.num_s = 0;
-    indi.com_s = 255;
+    indi.num_s = 255;
+    indi.scr_s = 255;
     eeconfig_update_user_datablock(&indi);
 }
 
@@ -108,38 +105,71 @@ void keyboard_post_init_user(void) {
 eeconfig_read_user_datablock(&indi);
 }
 
+# if defined CAPS_LOCK_LED_INDEX
+# undef CAPS_LOCK_LED_INDEX
+# endif
+# if defined SCROLL_LOCK_LED_INDEX
+# undef SCROLL_LOCK_LED_INDEX
+# endif
+# if defined NUM_LOCK_LED_INDEX
+# undef NUM_LOCK_LED_INDEX
+# endif
+#define CAPS_LOCK_LED_INDEX 16
+#define CAPS_LOCK_LED_INDEX2 17
+#define NUM_LOCK_LED_INDEX 18
+#define NUM_LOCK_LED_INDEX2 19
+#define SCROLL_LOCK_LED_INDEX 14
+
+#if defined(RGB_MATRIX_ENABLE) && (defined(CAPS_LOCK_LED_INDEX) || defined(NUM_LOCK_LED_INDEX) || defined(SCROLL_LOCK_LED_INDEX))
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
     HSV hsv;
-    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-        hsv.h = indi.com_h;
-        hsv.s = indi.com_s;
-        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (!host_keyboard_led_state().num_lock) {
-        hsv.h = indi.num_h;
-        hsv.s = indi.num_s;
-        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (host_keyboard_led_state().caps_lock) {
+    // RGB_MATRIX_INDICATOR_SET_COLOR(index, red, green, blue);
+#    if defined(CAPS_LOCK_LED_INDEX)
+    if (host_keyboard_led_state().caps_lock) {
         hsv.h = indi.cap_h;
         hsv.s = indi.cap_s;
         hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (!rgb_matrix_get_flags()) {
-        hsv.h = 0;
-        hsv.s = 0;
-        hsv.v = 0;
+        RGB rgb = hsv_to_rgb(hsv);
+        RGB_MATRIX_INDICATOR_SET_COLOR(CAPS_LOCK_LED_INDEX, rgb.r, rgb.g, rgb.b);
+        RGB_MATRIX_INDICATOR_SET_COLOR(CAPS_LOCK_LED_INDEX2, rgb.r, rgb.g, rgb.b);
     } else {
-        return false;
-    }
-
-    RGB rgb = hsv_to_rgb(hsv);
-
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_MODIFIER
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        if (!rgb_matrix_get_flags()) {
+            RGB_MATRIX_INDICATOR_SET_COLOR(CAPS_LOCK_LED_INDEX, 0, 0, 0);
+            RGB_MATRIX_INDICATOR_SET_COLOR(CAPS_LOCK_LED_INDEX2, 0, 0, 0);
         }
     }
+#    endif // CAPS_LOCK_LED_INDEX
+#    if defined(NUM_LOCK_LED_INDEX)
+    if (!host_keyboard_led_state().num_lock) {
+        hsv.h = indi.num_h;
+        hsv.s = indi.num_s;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+        RGB rgb = hsv_to_rgb(hsv);
+        RGB_MATRIX_INDICATOR_SET_COLOR(NUM_LOCK_LED_INDEX,  rgb.r, rgb.g, rgb.b);
+        RGB_MATRIX_INDICATOR_SET_COLOR(NUM_LOCK_LED_INDEX2,  rgb.r, rgb.g, rgb.b);
+    } else {
+        if (!rgb_matrix_get_flags()) {
+            RGB_MATRIX_INDICATOR_SET_COLOR(NUM_LOCK_LED_INDEX, 0, 0, 0);
+            RGB_MATRIX_INDICATOR_SET_COLOR(NUM_LOCK_LED_INDEX2, 0, 0, 0);
+        }
+    }
+#    endif // NUM_LOCK_LED_INDEX
+#    if defined(SCROLL_LOCK_LED_INDEX)
+    if (host_keyboard_led_state().scroll_lock) {
+        hsv.h = indi.scr_h;
+        hsv.s = indi.scr_s;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+        RGB rgb = hsv_to_rgb(hsv);
+        RGB_MATRIX_INDICATOR_SET_COLOR(SCROLL_LOCK_LED_INDEX,  rgb.r, rgb.g, rgb.b);
+    } else {
+        if (!rgb_matrix_get_flags()) {
+            RGB_MATRIX_INDICATOR_SET_COLOR(SCROLL_LOCK_LED_INDEX, 0, 0, 0);
+        }
+    }
+#    endif // SCROLL_LOCK_LED_INDEX
     return true;
 }
-#endif
+#endif // RGB_MATRIX_ENABLE...
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron(keycode, record)) {
@@ -206,22 +236,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 eeconfig_update_user_datablock(&indi);
             }
             return false;
-        case COMBLKU:
+        case SCRLLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    indi.com_s = qadd8(indi.com_s, RGB_MATRIX_SAT_STEP);
+                    indi.scr_s = qadd8(indi.scr_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indi.com_h = (indi.com_h + RGB_MATRIX_HUE_STEP);
+                    indi.scr_h = (indi.scr_h + RGB_MATRIX_HUE_STEP);
                 }
                 eeconfig_update_user_datablock(&indi);
             }
             return false;
-        case COMBLKD:
+        case SCRLLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    indi.com_s = qsub8(indi.com_s, RGB_MATRIX_SAT_STEP);
+                    indi.scr_s = qsub8(indi.scr_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    indi.com_h = (indi.com_h - RGB_MATRIX_HUE_STEP);
+                    indi.scr_h = (indi.scr_h - RGB_MATRIX_HUE_STEP);
                 }
                 eeconfig_update_user_datablock(&indi);
             }
