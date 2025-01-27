@@ -2,32 +2,12 @@
 
 #include QMK_KEYBOARD_H
 
-enum custom_keycodes {
-    CAPGEN = QK_KB_0,
+enum my_keycodes {
+    CAPGEN = COMBLKU + 1,
     CHROME,
-    EXTEND
+    EXTEND,
+    RMP
 };
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case CAPGEN:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LCTL("acvvvvv"));
-            }
-            return false;
-        case CHROME:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LALT(" ") SS_DELAY(200) ">chrome.exe" SS_DELAY(200) SS_TAP(X_ENT));
-            }
-            return false;
-        case EXTEND:
-            if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC) );
-            }
-            return false;
-    }
-    return true;
-}
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT(
@@ -40,12 +20,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 	[1] = LAYOUT(
-	EXTEND,           KC_BRID, KC_BRIU, _______, _______, _______, _______, _______, _______, _______, _______, _______,          CAPGEN,  _______, _______, _______, _______, CHROME,
+	EXTEND,           KC_BRID, KC_BRIU, CAPSLKD, CAPSLKU, COMBLKD, COMBLKU, NUMLKOD, NUMLKOU, _______, _______, _______,          CAPGEN,  _______, _______, _______, _______, CHROME,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, RGB_SAI, RGB_VAI, RGB_SPI, RGB_MOD,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______, _______, RGB_HUD, _______, RGB_HUI,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          RGB_SAD, RGB_VAD, RGB_SPD, RGB_RMOD,
-	MO(2),   _______, _______,                            _______,                            _______, _______, _______,          _______, _______, RGB_TOG,          RGB_M_P
+	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, UG_SATU, UG_VALU, UG_SPDU, UG_NEXT,
+	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______, _______, UG_HUED, _______, UG_HUEU,
+	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          UG_SATD, UG_VALD, UG_SPDD, UG_PREV,
+	MO(2),   _______, _______,                            _______,                            _______, _______, _______,          _______, _______, UG_TOGG,          RMP
     ),
 
 	[2] = LAYOUT(
@@ -66,3 +46,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	_______, _______, _______,                            _______,                            _______, _______, _______,          _______, _______, _______,          _______
     ),
 };
+// clang-format on
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case CAPGEN:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvv"));
+            }
+            return false;
+        case CHROME:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LALT(" ") SS_DELAY(200) ">chrome.exe" SS_DELAY(200) SS_TAP(X_ENT));
+            }
+            return false;
+        case EXTEND:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC));
+            }
+            return false;
+        case RMP:
+            if (record->event.pressed) {
+                if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            }
+            return false;
+    }
+    return true;
+}
