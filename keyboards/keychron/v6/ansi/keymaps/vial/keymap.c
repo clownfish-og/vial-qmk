@@ -74,35 +74,72 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 // clang-format on
 
-typedef union {
-    uint32_t raw;
-    struct {
+#ifdef RGB_MATRIX_ENABLE
+
+// Single Indicator memory layout
+
+typedef struct indicator_t {
         uint8_t cap_h;
         uint8_t num_h;
         uint8_t com_h;
         uint8_t cap_s;
         uint8_t num_s;
         uint8_t com_s;
-    };
-} user_config_t;
+    } indicator;
 
-user_config_t user_config;
+indicator indi;
+
+// Check if the size of the reserved persistent memory is the same as the size of struct apc_config
+_Static_assert(sizeof(indicator) == EECONFIG_USER_DATA_SIZE, "Mismatch in keyboard EECONFIG stored data");
+
+void eeconfig_init_user(void) {
+    // Default values
+    indi.cap_h = 170;
+    indi.num_h = 0;
+    indi.com_h = 0;
+    indi.cap_s = 255;
+    indi.num_s = 0;
+    indi.com_s = 255;
+    eeconfig_update_user_datablock(&indi);
+}
 
 // Initialize the EEPROM values
 void keyboard_post_init_user(void) {
-    user_config.raw = eeconfig_read_user();
+eeconfig_read_user_datablock(&indi);
 }
 
-void eeconfig_init_user(void) {
-    user_config.raw   = 0;
-    user_config.cap_h = 170;
-    user_config.num_h = 0;
-    user_config.com_h = 0;
-    user_config.cap_s = 255;
-    user_config.num_s = 0;
-    user_config.com_s = 255;
-    eeconfig_update_user(user_config.raw);
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    HSV hsv;
+    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
+        hsv.h = indi.com_h;
+        hsv.s = indi.com_s;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (!host_keyboard_led_state().num_lock) {
+        hsv.h = indi.num_h;
+        hsv.s = indi.num_s;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (host_keyboard_led_state().caps_lock) {
+        hsv.h = indi.cap_h;
+        hsv.s = indi.cap_s;
+        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
+    } else if (!rgb_matrix_get_flags()) {
+        hsv.h = 0;
+        hsv.s = 0;
+        hsv.v = 0;
+    } else {
+        return false;
+    }
+
+    RGB rgb = hsv_to_rgb(hsv);
+
+    for (uint8_t i = led_min; i < led_max; i++) {
+        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_MODIFIER
+            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
+        }
+    }
+    return true;
 }
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (!process_record_keychron(keycode, record)) {
@@ -132,61 +169,61 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPSLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.cap_s = qadd8(user_config.cap_s, RGB_MATRIX_SAT_STEP);
+                    indi.cap_s = qadd8(indi.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.cap_h = (user_config.cap_h + RGB_MATRIX_HUE_STEP);
+                    indi.cap_h = (indi.cap_h + RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case CAPSLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.cap_s = qsub8(user_config.cap_s, RGB_MATRIX_SAT_STEP);
+                    indi.cap_s = qsub8(indi.cap_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.cap_h = (user_config.cap_h - RGB_MATRIX_HUE_STEP);
+                    indi.cap_h = (indi.cap_h - RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case NUMLKOU:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.num_s = qadd8(user_config.num_s, RGB_MATRIX_SAT_STEP);
+                    indi.num_s = qadd8(indi.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.num_h = (user_config.num_h + RGB_MATRIX_HUE_STEP);
+                    indi.num_h = (indi.num_h + RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case NUMLKOD:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.num_s = qsub8(user_config.num_s, RGB_MATRIX_SAT_STEP);
+                    indi.num_s = qsub8(indi.num_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.num_h = (user_config.num_h - RGB_MATRIX_HUE_STEP);
+                    indi.num_h = (indi.num_h - RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case COMBLKU:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.com_s = qadd8(user_config.com_s, RGB_MATRIX_SAT_STEP);
+                    indi.com_s = qadd8(indi.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.com_h = (user_config.com_h + RGB_MATRIX_HUE_STEP);
+                    indi.com_h = (indi.com_h + RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case COMBLKD:
             if (record->event.pressed) {
                 if (shifted) {
-                    user_config.com_s = qsub8(user_config.com_s, RGB_MATRIX_SAT_STEP);
+                    indi.com_s = qsub8(indi.com_s, RGB_MATRIX_SAT_STEP);
                 } else {
-                    user_config.com_h = (user_config.com_h - RGB_MATRIX_HUE_STEP);
+                    indi.com_h = (indi.com_h - RGB_MATRIX_HUE_STEP);
                 }
-                eeconfig_update_user(user_config.raw);
+                eeconfig_update_user_datablock(&indi);
             }
             return false;
         case CAPGEN:
@@ -212,40 +249,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
 }
-
-#ifdef RGB_MATRIX_ENABLE
-bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    HSV hsv;
-    if (host_keyboard_led_state().caps_lock && !host_keyboard_led_state().num_lock) {
-        hsv.h = user_config.com_h;
-        hsv.s = user_config.com_s;
-        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (!host_keyboard_led_state().num_lock) {
-        hsv.h = user_config.num_h;
-        hsv.s = user_config.num_s;
-        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (host_keyboard_led_state().caps_lock) {
-        hsv.h = user_config.cap_h;
-        hsv.s = user_config.cap_s;
-        hsv.v = RGB_MATRIX_MAXIMUM_BRIGHTNESS;
-    } else if (!rgb_matrix_get_flags()) {
-        hsv.h = 0;
-        hsv.s = 0;
-        hsv.v = 0;
-    } else {
-        return false;
-    }
-
-    RGB rgb = hsv_to_rgb(hsv);
-
-    for (uint8_t i = led_min; i < led_max; i++) {
-        if (HAS_FLAGS(g_led_config.flags[i], 0x08)) { // 0x08 == LED_FLAG_MODIFIER
-            rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
-        }
-    }
-    return true;
-}
-#endif
 
 void housekeeping_task_user(void) {
     housekeeping_task_keychron();
