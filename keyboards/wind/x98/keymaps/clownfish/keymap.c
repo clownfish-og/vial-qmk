@@ -3,7 +3,7 @@
 #include QMK_KEYBOARD_H
 
 enum my_keycodes {
-    CAPGEN = COMBLKU + 1,
+    CAPGEN = VIAL_SAFE_RANGE,
     CHROME,
     EXTEND,
     RMP
@@ -62,7 +62,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case EXTEND:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("P") SS_DELAY(500) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(400) SS_TAP(X_ESC));
+                SEND_STRING(SS_LGUI("p") SS_DELAY(300) SS_TAP(X_DOWN) SS_DELAY(50) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_ENT) SS_DELAY(100) SS_TAP(X_ESC));
             }
             return false;
         case RMP:

@@ -7,6 +7,7 @@ enum indicator_keycodes {
     NUMLKOD,
     NUMLKOU,
     COMBLKD,
-    COMBLKU
+    COMBLKU,
+    VIAL_SAFE_RANGE
 };
 #endif
