@@ -20,19 +20,22 @@
 
 // clang-format off
 enum indicator_keycodes {
-    CAPSLKD = 0x7E0B,
+    CAPSLKD = 0x7E0B,  //Keychron keycodes +1
     CAPSLKU,
     NUMLKOD,
     NUMLKOU,
     SCRLLKD,
-    SCRLLKU
+    SCRLLKU,
+    MY_SAFE_RANGE
 };
 
 enum my_keycodes {
-    CAPGEN = 0x7E11,
+    CAPGEN = MY_SAFE_RANGE,
     CHROME,
     EXTEND,
-    RMP
+    RMP,
+    VENV,
+    CLANGD
 };
 
 enum layers{
@@ -55,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  SCRLLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
         UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  SCRLLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
         _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
+        _______,            _______,  _______,  CLANGD,   VENV,    _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
     [WIN_BASE] = LAYOUT_ansi_108(
         KC_ESC,             KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,     KC_F12,   KC_PSCR,  KC_SCRL,  KC_PAUSE, CHROME,   KC_MUTE,  G(KC_D),  KC_EQL,
@@ -69,7 +72,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKU,  SCRLLKU,  NUMLKOU,  _______,  _______,  _______,  _______,
         UG_TOGG,  UG_NEXT,  UG_VALU,  UG_HUEU,  UG_SATU,  UG_SPDU,  _______,  _______,  _______,  _______,  _______,  _______,  _______,    _______,  CAPSLKD,  SCRLLKD,  NUMLKOD,  UG_SATU,  UG_VALU,  UG_SPDU,
         _______,  UG_PREV,  UG_VALD,  UG_HUED,  UG_SATD,  UG_SPDD,  _______,  _______,  _______,  _______,  _______,  _______,              _______,                                UG_HUED,  _______,  UG_HUEU,  UG_NEXT,
-        _______,            _______,  _______,  _______,  _______,  _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
+        _______,            _______,  _______,  CLANGD,   VENV,    _______,  NK_TOGG,  _______,  _______,  _______,  _______,              _______,            _______,            UG_SATD,  UG_VALD,  UG_SPDD,
         _______,  _______,  _______,                                _______,                                _______,  _______,  _______,    _______,  _______,  _______,  _______,  UG_TOGG,            RMP,      UG_PREV),
 };
 // clang-format on
@@ -274,6 +277,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RMP:
             if (record->event.pressed) {
                 if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            }
+            return false;
+        case VENV:
+            if (record->event.pressed) {
+                SEND_STRING("source .venv/bin/activate\n");
+            }
+            return false;
+        case CLANGD:
+            if (record->event.pressed) {
+                SEND_STRING("qmk compile -kb  -km  --compiledb" SS_TAP(X_HOME) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_TAP(X_RIGHT));
             }
             return false;
     }

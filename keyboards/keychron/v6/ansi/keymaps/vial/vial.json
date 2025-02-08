@@ -24,7 +24,9 @@
     {"name": "CAPGEN", "title": "Copy All and Paste x5", "shortName": "CAP5"},
     {"name": "CHROME", "title": "Powertoys Run Chrome Browser", "shortName": "CHRME"},
     {"name": "EXTEND", "title": "Extend Desktop / Host Monitor", "shortName": "PROJ"},
-    {"name": "RMP", "title": "RGB Mode Plain", "shortName": "RMP"}
+    {"name": "RMP", "title": "RGB Mode Plain", "shortName": "RMP"},
+    {"name": "VENV", "title": "source .venv/bin/activate", "shortName": "VENV"},
+    {"name": "CLANGD", "title": "qmk compile -kb  -km  --compiledb", "shortName": "CLANGD"}
   ],
   "matrix": {"rows": 6, "cols": 20},
   "layouts": {
