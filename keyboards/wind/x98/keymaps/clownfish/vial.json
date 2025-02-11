@@ -10,15 +10,18 @@
     },
     "lighting": "vialrgb",
     "customKeycodes": [
-        {"name": "CAPGEN", "title": "Copy All and Paste x5", "shortName": "CAP5"},
-	    {"name": "CHROME", "title": "Powertoys Run Chrome Browser", "shortName": "CHRME"},
-	    {"name": "EXTEND", "title": "Extend Desktop / Host Monitor", "shortName": "PROJ"},
         {"name": "CAPSLKD", "title": "Decrease Capslock Indicator Color(Sat When Shifted)", "shortName": "CAPSD"},
 	    {"name": "CAPSLKU", "title": "Increase Capslock Indicator Color(Sat When Shifted)", "shortName": "CAPSU"},
 	    {"name": "NUMLKOD", "title": "Decrease Numlock Indicator Color(Sat When Shifted)", "shortName": "NUMOD"},
         {"name": "NUMLKOU", "title": "Increase Numlock Indicator Color(Sat When Shifted)", "shortName": "NUMOU"},
 	    {"name": "COMBLKD", "title": "Decrease Combination Indicator Color(Sat When Shifted)", "shortName": "COMBD"},
-	    {"name": "COMBLKU", "title": "Increase Combination Indicator Color(Sat When Shifted)", "shortName": "COMBU"}
+	    {"name": "COMBLKU", "title": "Increase Combination Indicator Color(Sat When Shifted)", "shortName": "COMBU"},
+        {"name": "CAPGEN", "title": "Copy All and Paste x5", "shortName": "CAP5"},
+	    {"name": "CHROME", "title": "Powertoys Run Chrome Browser", "shortName": "CHRME"},
+	    {"name": "EXTEND", "title": "Extend Desktop / Host Monitor", "shortName": "PROJ"},
+        {"name": "RMP", "title": "Set RGB to solid_color", "shortName": "PLAIN"},
+        {"name": "VENV", "title": "source .venv/bin/activate\n", "shortName": "VENV"},
+        {"name": "CLANGD", "title": "qmk compile -kb  -km  --compiledb", "shortName": "CLNGD"}
 	],
     "matrix": {
         "rows": 6,

@@ -22,9 +22,9 @@ _Static_assert(sizeof(indicator) == EECONFIG_KB_DATA_SIZE, "Mismatch in keyboard
 
 void eeconfig_init_kb(void) {
     // Default values
-    indi.cap_h = 176;
+    indi.cap_h = 168;
     indi.num_h = 0;
-    indi.com_h = 192;
+    indi.com_h = 184;
     indi.cap_s = 255;
     indi.num_s = 0;
     indi.com_s = 255;

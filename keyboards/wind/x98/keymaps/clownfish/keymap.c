@@ -6,7 +6,9 @@ enum my_keycodes {
     CAPGEN = VIAL_SAFE_RANGE,
     CHROME,
     EXTEND,
-    RMP
+    RMP,
+    VENV,
+    CLANGD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -24,7 +26,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, UG_SATU, UG_VALU, UG_SPDU, UG_NEXT,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______, _______, UG_HUED, _______, UG_HUEU,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______,          UG_SATD, UG_VALD, UG_SPDD, UG_PREV,
+	_______, _______, _______, _______, CLANGD,  VENV,    _______, _______, _______, _______, _______, _______, _______,          _______,          UG_SATD, UG_VALD, UG_SPDD, UG_PREV,
 	MO(2),   _______, _______,                            _______,                            _______, _______, _______,          _______, _______, UG_TOGG,          RMP
     ),
 
@@ -68,6 +70,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RMP:
             if (record->event.pressed) {
                 if (rgb_matrix_is_enabled()) rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            }
+            return false;
+        case VENV:
+            if (record->event.pressed) {
+                SEND_STRING("source .venv/bin/activate\n");
+            }
+            return false;
+        case CLANGD:
+            if (record->event.pressed) {
+                SEND_STRING("qmk compile -kb  -km  --compiledb" SS_TAP(X_HOME) SS_DOWN(X_LCTL) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_TAP(X_RIGHT) SS_UP(X_LCTL) SS_TAP(X_RIGHT));
             }
             return false;
     }
