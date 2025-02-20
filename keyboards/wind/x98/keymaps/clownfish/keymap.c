@@ -8,6 +8,7 @@ enum my_keycodes {
     EXTEND,
     RMP,
     VENV,
+    DEACT,
     CLANGD
 };
 
@@ -25,7 +26,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	EXTEND,           KC_BRID, KC_BRIU, CAPSLKD, CAPSLKU, COMBLKD, COMBLKU, NUMLKOD, NUMLKOU, _______, _______, _______,          CAPGEN,  _______, _______, _______, _______, CHROME,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
 	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,          _______, _______, UG_SATU, UG_VALU, UG_SPDU, UG_NEXT,
-	_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,                   _______, _______, UG_HUED, _______, UG_HUEU,
+	_______, _______, _______, DEACT,   _______, _______, _______, _______, _______, _______, _______, _______,                   _______, _______, UG_HUED, _______, UG_HUEU,
 	_______, _______, _______, _______, CLANGD,  VENV,    _______, _______, _______, _______, _______, _______, _______,          _______,          UG_SATD, UG_VALD, UG_SPDD, UG_PREV,
 	MO(2),   _______, _______,                            _______,                            _______, _______, _______,          _______, _______, UG_TOGG,          RMP
     ),
@@ -75,6 +76,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case VENV:
             if (record->event.pressed) {
                 SEND_STRING("source .venv/bin/activate\n");
+            }
+            return false;
+        case DEACT:
+            if (record->event.pressed) {
+                SEND_STRING("deactivate\n");
             }
             return false;
         case CLANGD:
