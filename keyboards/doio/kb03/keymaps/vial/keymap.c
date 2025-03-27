@@ -3,33 +3,40 @@
 
 #include QMK_KEYBOARD_H
 
+enum my_layers {
+    SYSTEM,
+    COPY,
+    TWITCH,
+    LIGHTS
+};
+
 #ifdef RGB_MATRIX_ENABLE
 
 bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
-    HSV hsv = {0, 255, 200};
+    hsv_t hsv = {0, 255, 200};
 
     uint8_t active_layer = get_highest_layer(layer_state);
 
     switch (active_layer) {
-        case 0:
-            hsv = (HSV){0, 0, 100}; // Layer 0: WHITE
+        case SYSTEM:
+            hsv = (hsv_t){HSV_BLUE};
             break;
-        case 1:
-            hsv = (HSV){85, 255, 100}; // Layer 1: GREEN
+        case COPY:
+            hsv = (hsv_t){HSV_GREEN};
             break;
-        case 2:
-            hsv = (HSV){169, 255, 100}; // Layer 2: BLUE
+        case TWITCH:
+            hsv = (hsv_t){HSV_PURPLE};
             break;
-        case 3:
-            hsv = (HSV){30, 255, 100}; // Layer 3: YELLOW
+        case LIGHTS:
+            hsv = (hsv_t){HSV_GOLD};
             break;
         default:
-            hsv = (HSV){0, 255, 100}; // err: RED
+            hsv = (hsv_t){HSV_RED}; // err: RED
             break;
     }
 
     hsv.v     = (rgb_matrix_get_val() * 70 / 200) + 30; //set indicator brightness range 30-100, vary based on RGB Matrix brightness
-    RGB rgb = hsv_to_rgb(hsv);
+    rgb_t rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
 }
@@ -39,10 +46,13 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 enum custom_keycodes {
     SIMPLGT = QK_KB_0,
     PROJECT,
-    CHROME
+    CHROME,
+    SPAM,
+    LFISH
 };
-
+uint8_t mod_state;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    mod_state = get_mods();
     switch (keycode) {
         case SIMPLGT:
             if (record->event.pressed) {
@@ -80,6 +90,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LALT(" ") SS_DELAY(150) ">chrome.exe" SS_DELAY(150) SS_TAP(X_ENT));
             }
             return false;
+        case SPAM:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL("acvvvvv"));
+            }
+            return false;
+        case LFISH:
+        if (record->event.pressed) {
+                bool shifted = mod_state & MOD_MASK_SHIFT;
+                if (host_keyboard_led_state().caps_lock) {
+                    tap_code(KC_CAPS);
+                } if (shifted) {
+                    del_mods(MOD_MASK_SHIFT);
+                    SEND_STRING("koby36Clownfishog ");
+                    set_mods(mod_state);
+                } else {
+                SEND_STRING("tacosa13Lubs wertyo2Clownfish tacosa13Lubs ");
+                }
+            }
+            return false;
         case UG_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
@@ -103,25 +132,33 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    [0] = LAYOUT(
-        TO(1),   UG_HUEU,  SIMPLGT,  UG_SATU,   KC_RSFT
+    [SYSTEM] = LAYOUT(
+            TO(COPY),
+        CHROME,   UG_TOGG, G(KC_D),
+                      PROJECT
     ),
-    [1] = LAYOUT(
-        TO(2),   KC_ENT,   C(KC_C), C(S(KC_V)), C(KC_Z)
+    [COPY] = LAYOUT(
+            TO(TWITCH),
+        KC_ENT,   C(KC_C), C(S(KC_V)),
+                      C(KC_Z)
     ),
-    [2] = LAYOUT(
-        TO(3),   CHROME,   UG_TOGG,  G(KC_D),   PROJECT
+    [TWITCH] = LAYOUT(
+            TO(LIGHTS),
+        KC_ENT,   SPAM,    LFISH,
+                      KC_LSFT
     ),
-    [3] = LAYOUT(
-        TO(0),   KC_WBAK,  KC_WHOM,  KC_WFWD,   KC_MPLY
+    [LIGHTS] = LAYOUT(
+            TO(SYSTEM),
+        UG_HUEU,  SIMPLGT, UG_SATU,
+                      KC_LSFT
     )
 };
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-    [0] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(UG_PREV, UG_NEXT) },
-    [1] = { ENCODER_CCW_CW(KC_WH_L, KC_WH_R),  ENCODER_CCW_CW(KC_WH_U, KC_WH_D) },
-    [2] = { ENCODER_CCW_CW(KC_BRID, KC_BRIU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [3] = { ENCODER_CCW_CW(KC_MRWD, KC_MFFD),  ENCODER_CCW_CW(KC_MPRV, KC_MNXT) },
+    [SYSTEM] = { ENCODER_CCW_CW(KC_BRID, KC_BRIU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [COPY]   = { ENCODER_CCW_CW(MS_WHLL, MS_WHLR),  ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
+    [TWITCH] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),  ENCODER_CCW_CW(G(KC_LEFT), G(KC_RGHT)) },
+    [LIGHTS] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(UG_PREV, UG_NEXT) }
 };
 #endif

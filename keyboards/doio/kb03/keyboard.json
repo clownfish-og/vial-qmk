@@ -60,7 +60,8 @@
         },
         "center_point": [32, 32],
         "default": {
-            "animation": "dual_beacon"
+            "animation": "dual_beacon",
+            "hue": 127
         },
         "driver": "ws2812",
         "layout": [
@@ -76,7 +77,6 @@
             {"x": 10, "y": 0, "flags": 8}
         ],
         "max_brightness": 200,
-        "hue_step": 16,
         "sleep": true
     },
 
