@@ -109,7 +109,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case UG_TOGG:
+        case RM_TOGG:
             if (record->event.pressed) {
                 switch (rgb_matrix_get_flags()) {
                     case LED_FLAG_ALL: {
@@ -134,7 +134,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [SYSTEM] = LAYOUT(
             TO(COPY),
-        CHROME,   UG_TOGG, G(KC_D),
+        CHROME,   RM_TOGG, G(KC_D),
                       PROJECT
     ),
     [COPY] = LAYOUT(
@@ -149,7 +149,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [LIGHTS] = LAYOUT(
             TO(SYSTEM),
-        UG_HUEU,  SIMPLGT, UG_SATU,
+        RM_HUEU,  SIMPLGT, RM_SATU,
                       KC_LSFT
     )
 };
@@ -159,6 +159,6 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
     [SYSTEM] = { ENCODER_CCW_CW(KC_BRID, KC_BRIU),  ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [COPY]   = { ENCODER_CCW_CW(MS_WHLL, MS_WHLR),  ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
     [TWITCH] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),  ENCODER_CCW_CW(G(KC_LEFT), G(KC_RGHT)) },
-    [LIGHTS] = { ENCODER_CCW_CW(UG_VALD, UG_VALU),  ENCODER_CCW_CW(UG_PREV, UG_NEXT) }
+    [LIGHTS] = { ENCODER_CCW_CW(RM_VALD, RM_VALU),  ENCODER_CCW_CW(RM_PREV, RM_NEXT) }
 };
 #endif

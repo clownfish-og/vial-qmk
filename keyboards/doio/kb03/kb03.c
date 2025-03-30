@@ -48,26 +48,26 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
         return false;
         }
 
-    HSV hsv = {0, 255, 100};
+    hsv_t hsv = {0, 255, 100};
     switch (get_highest_layer(layer_state)) {
         case 0:
-            hsv = (HSV){HSV_RED};
+            hsv = (hsv_t){HSV_RED};
             break;
         case 1:
-            hsv = (HSV){HSV_GREEN};
+            hsv = (hsv_t){HSV_GREEN};
             break;
         case 2:
-            hsv = (HSV){HSV_BLUE};
+            hsv = (hsv_t){HSV_BLUE};
             break;
         case 3:
-            hsv = (HSV){HSV_WHITE};
+            hsv = (hsv_t){HSV_WHITE};
             break;
         default:
-            hsv = (HSV){HSV_YELLOW};
+            hsv = (hsv_t){HSV_YELLOW};
             break;
     }
     hsv.v     = (rgb_matrix_get_val() * 70 / 200) + 30; //set indicator brightness range 30-100, vary based on RGB Matrix brightness
-    RGB rgb = hsv_to_rgb(hsv);
+    rgb_t rgb = hsv_to_rgb(hsv);
     rgb_matrix_set_color(9, rgb.r, rgb.g, rgb.b);
     return false;
 }
