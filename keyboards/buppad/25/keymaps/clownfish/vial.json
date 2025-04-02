@@ -2,7 +2,7 @@
     "name": "BUPpad25",
     "vendorId": "0xF1F1",
     "productId": "0x0025",
-    "keycodes": ["qmk_lighting"],
+    "lighting": ["vialrgb"],
     "customKeycodes": [
         {"name": "RMPL", "title": "Set RGB to solid_color", "shortName": "RMPL"},
         {"name": "RMAM", "title": "Set RGB to alphas_mods", "shortName": "RMAM"},
@@ -161,70 +161,6 @@
         {"name": "TTHIS", "title": "tinosThis", "shortName": "TTHIS"},
         {"name": "MKLOVE", "title": "mrkitt10ALLLOVE", "shortName": "MKLVE"},
         {"name": "ETGOLD", "title": "etownGold", "shortName": "ETGLD"}
-    ],
-    "menus": [
-      {
-        "label": "Lighting",
-        "content": [
-          {
-            "label": "Backlight",
-            "content": [
-              {
-                "label": "Brightness",
-                "type": "range",
-                "options": [0, 200],
-                "content": ["id_qmk_rgb_matrix_brightness", 3, 1]
-              },
-              {
-                "label": "Effect",
-                "type": "dropdown",
-                "content": ["id_qmk_rgb_matrix_effect", 3, 2],
-                "options": [
-                  "All Off",
-                  "Solid Color",
-                  "Alphas Mods",
-                  "Gradient Up/Down",
-                  "Gradient Left/Right",
-                  "Breathing",
-                  "Band Sat.",
-                  "Band Val.",
-                  "Pinwheel Sat.",
-                  "Pinwheel Val.",
-                  "Spiral Sat.",
-                  "Spiral Val.",
-                  "Cycle All",
-                  "Cycle Left/Right",
-                  "Cycle Up/Down",
-                  "Cycle Out/In",
-                  "Cycle Pinwheel",
-                  "Cycle Spiral",
-                  "Rainbow Beacon",
-                  "Reactive Simple",
-                  "Solid Reactive",
-                  "Reactive Simple Wide",
-                  "Reactive Simple Cross",
-                  "Reactive Simple Nexus",
-                  "Rainbow Splash",
-                  "Solid Splash"
-                ]
-              },
-              {
-                "showIf": "{id_qmk_rgb_matrix_effect} != 0",
-                "label": "Effect Speed",
-                "type": "range",
-                "options": [0, 255],
-                "content": ["id_qmk_rgb_matrix_effect_speed", 3, 3]
-              },
-              {
-                "showIf": "{id_qmk_rgb_matrix_effect} != 0 && {id_qmk_rgb_matrix_effect} != 24 && {id_qmk_rgb_matrix_effect} != 28 && {id_qmk_rgb_matrix_effect} != 29 && {id_qmk_rgb_matrix_effect} != 32",
-                "label": "Color",
-                "type": "color",
-                "content": ["id_qmk_rgb_matrix_color", 3, 4]
-              }
-            ]
-          }
-        ]
-      }
     ],
     "matrix": {"rows": 5, "cols": 5},
     "layouts": {
