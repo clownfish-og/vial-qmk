@@ -53,7 +53,7 @@
          WHIYA,      BDANCE,     GPTUNE,     KSMUG,      KHUG,
          WGRIN,      KYLGHT,     GPMNKY,     KRDNC,      KLOVE,
          WHRTBT,     KYPOLR,     GPLFG,      KCLAP,      BOPBOP,
-         WCLNFSH,    KYCFOG,     GPCFSW,     TTHIS,      ETGOLD
+         WCLNFSH,    KYCFOG,     GPCFSW,     TTHIS,      TOMBRAID
      ),
      [5] = LAYOUT(
          TO(0),      TO(1),      TO(2),      TO(3),      TO(4),
