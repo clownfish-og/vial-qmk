@@ -24,29 +24,29 @@
          TO(1),      CHEESE,     AMNESIA,    GROOVY,     DUCKDANCE,
          DISCO,      DIDDY,      CATDANCE,   SLAY,       BEARDDANCE,
          PATBANG,    FREAKOUT,   DRUMS,      FROG,       KEKW,
-         BACKDOOR,   LOVE,       THANKS,     ZEJIBO,     BUG,
+         BACKDOOR,   LOVE,       THANKS,     BUPO,       BUG,
          BITS,       MOOSE,      BUP,        CAPGEN5,    KC_ENT
      ),
      [1] = LAYOUT(
          TO(0),      TO(5),      TO(2),      TO(3),      TO(4),
-         WATER,      DONUT,      DYE,        SMIRK,      EXCUSEME,
-         RUMP,       TINFOIL,    CLOUDS,     SALT,       WINK,
-         BALLOON,    HEART,      ASCEND,     JELLY,      BUPO,
-         RAVE,       CROWN,      TIEDYE,     SUS,        DRAGON
+         THING,      DONUT,      DYE,        WUB,        EXCUSEME,
+         ZEJIBO,     SALUTE,     SPIN,       HOUSE,      SWEATY,
+         BALLOON,    HORN,       FLUTE,      ASCEND,     UP,
+         WOOK,       CROWN,      TIEDYE,     SUS,        NOD
      ),
      [2] = LAYOUT(
          TO(0),      TO(1),      TO(5),      TO(3),      TO(4),
-         DUCKHEAD,   WIZ,        CHEFKISS,   MAPLE,      BIGBRAIN,
-         CALL,       DOIT,       GROGU,      JAWNESSA,   BART,
-         BUPS,       BROC,       BUPWAD,     LUIGIBUP,   ZELDABUP,
+         DUCKHEAD,   BOOMER,     CHEFKISS,   HEADOUT,    BIGBRAIN,
+         CALL,       DOIT,       GROGU,      FIRE,       BART,
+         BUPS,       KEYS,       BUPWAD,     LUIGIBUP,   ZELDABUP,
          AYO,        TUNE,       SH,         EE,         ID
      ),
      [3] = LAYOUT(
          TO(0),      TO(1),      TO(2),      TO(5),      TO(4),
-         BASSSFACE,  BOB,        LIGHTER,    UWU,        UP,
-         NOD,        GOOSE,      BOOMER,     WUB,        WOOK,
-         HEADOUT,    RAINBOW,    SALUTE,     SWEATY,     HORN,
-         FLUTE,      FIRE,       CHEERS,     KEYS,       CHILLGUY
+         BROC,       CLOUDS,     GOOSE,      HEART,      JAWNESSA,
+         RAVE,       SALT,       TINFOIL,    WATER,      WIZ,
+         BASSSFACE,  BOB,        CHILLGUY,   SMIRK,      JELLY,
+         MAPLE,      RUMP,       WINK,       UWU,        DRAGON
      ),
      [4] = LAYOUT(
          TO(0),      TO(1),      TO(2),      TO(3),      TO(5),
