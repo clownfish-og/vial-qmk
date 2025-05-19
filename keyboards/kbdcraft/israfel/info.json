@@ -126,9 +126,11 @@
         },
         "default":
         {
-            "val":100
+            "animation": "cycle_left_right",
+            "val": 100
         },
-        "max_brightness":200
+        "max_brightness":200,
+        "sleep": true
     },
     "ws2812": {
         "driver": "pwm",
