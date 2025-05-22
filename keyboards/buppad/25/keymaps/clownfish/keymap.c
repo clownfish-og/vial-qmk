@@ -73,7 +73,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 const char amnesia[] PROGMEM = "bupAmnesia";
 const char ayo[] PROGMEM = "bupAyo";
-const char backdoor[] PROGMEM = "bupBackDoor";
+const char backdoor[] PROGMEM = "bupBackdoor";
 const char balloon[] PROGMEM = "bupBalloon";
 const char bart[] PROGMEM = "bupBart";
 const char bearddance[] PROGMEM = "bupBEARDDANCE";
@@ -151,6 +151,7 @@ const char wink[] PROGMEM = "bupWink";
 const char abducktion[] PROGMEM = "bupAbDUCKtion";
 const char ascend[] PROGMEM = "bupAscend";
 const char ashduckem[] PROGMEM = "bupASHDUCKEM";
+const char demayo[] PROGMEM = "bupDEMAYO";
 const char excuseme[] PROGMEM = "bupEXCUSEME";
 const char fancyduck[] PROGMEM = "bupFANCYDUCK";
 const char gold[] PROGMEM = "bupGold";
@@ -304,6 +305,7 @@ PGM_P const emotes[] PROGMEM = {  // pointers to the strings above, in the same 
     abducktion,
     ascend,
     ashduckem,
+    demayo,
     excuseme,
     fancyduck,
     gold,

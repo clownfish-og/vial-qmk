@@ -98,6 +98,7 @@
     ABDUCKTION, // bitstier
     ASCEND,     // bitstier
     ASHDUCKEM,  // bitstier
+    DEMAYO,     // bitstier
     EXCUSEME,   // bitstier
     FANCYDUCK,  // bitstier
     GOLD,       // bitstier
