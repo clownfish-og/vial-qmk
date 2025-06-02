@@ -16,8 +16,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "quantum.h"
-#include "../util.h"
+#include "oled_driver.h"
+#include "action_layer.h"
+#include "progmem.h"
 
 #define ANIM_SIZE 512  // number of bytes in array, minimize for adequate firmware size, max is 1024
 
@@ -423,5 +424,5 @@ void render_layer_status(void) {
 
     };
 
-	WRITE_RAW(layer_status[get_highest_layer(layer_state)]);
+    oled_write_raw_P(layer_status[get_highest_layer(layer_state)], sizeof(layer_status[0]));
 }
