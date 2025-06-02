@@ -7,6 +7,9 @@
       "cols": 5
     },
   "lighting": "vialrgb",
+    "customKeycodes": [
+        {"name": "00", "title": "00", "shortName": "00"}
+    ],
   "layouts": {
     "keymap":[
         [

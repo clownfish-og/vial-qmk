@@ -24,8 +24,18 @@
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
 // entirely and just use numbers.
+enum my_layers {
+    BASE,
+    BASE_FN,
+    GAME1,
+    GAME1_FN,
+    GAME2,
+    GAME2_FN,
 
-
+};
+enum my_keycodes {
+    DBL_0 = QK_KB
+};
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*
@@ -38,22 +48,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        ├───┼───┼───┼───┤      │Mut│
        │Fn2│ ← │ ↓ │ → │      └───┘
        └───┴───┴───┴───┘
-       ┌───┬───┬───┬───┐   ┌───┐ ┌───┐
-       │ ! │ @ │ # │ $ │   │   │ │   │
-       ├───┼───┼───┼───┤   └───┘ └───┘
-       │ % │ ^ │ & │ * │
-       ├───┼───┼───┼───┤
-       │ ( │ ) │   │   │      ┌───┐
-       ├───┼───┼───┼───┤      │   │
-       │   │   │   │   │      └───┘
-       └───┴───┴───┴───┘
 */
-    /*  Row:    0         1        2        3         4      */
     [0] = LAYOUT(
-                KC_1,     KC_2,    KC_3,    KC_4,     KC_MPLY,
-                KC_5,     KC_6,    KC_7,    KC_8,     TO(1),
-                KC_9,     KC_0,    KC_UP,   KC_ENT,   KC_MUTE,
-                MO(3),    KC_LEFT, KC_DOWN, KC_RIGHT
+                KC_P7,    KC_P8,    KC_P9,   KC_NUM,     MO(1),
+                KC_P4,    KC_P5,    KC_P6,   KC_PMNS,     MS_BTN3,
+                KC_P1,    KC_P2,    KC_P3,   KC_PPLS,   KC_MUTE,
+                KC_P0,    DBL_0,    KC_PDOT, KC_ENT
             ),
 
 /*
@@ -67,7 +67,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        │   │   │   │   │      └───┘
        └───┴───┴───┴───┘
 */
-    /*  Row:    0        1        2        3        4       */
     [1] = LAYOUT(
                 _______, _______, _______, _______, _______,
                 _______, _______, _______, _______, TO(2),
@@ -86,7 +85,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        │   │   │   │   │      └───┘
        └───┴───┴───┴───┘
 */
-    /*  Row:    0        1        2        3        4       */
     [2] = LAYOUT(
                 _______, _______, _______, _______, _______,
                 _______, _______, _______, _______, TO(3),
@@ -105,7 +103,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        │Tog│Vad│Hud│Vai│      └───┘
        └───┴───┴───┴───┘
 */
-    /*  Row:    0        1        2        3        4        */
     [3] = LAYOUT(
                 RM_SPDD, RM_SPDU, _______, QK_BOOT, _______,
                 RM_SATD, RM_SATU, _______, _______, TO(0),
@@ -124,9 +121,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
-    [0] = { ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(KC_PGDN, KC_PGUP), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [0] = { ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(KC_PGDN, KC_PGUP), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
     [1]   = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
     [2]  = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
     [3]  = { ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS), ENCODER_CCW_CW(KC_TRNS, KC_TRNS) },
 };
 #endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case DBL_0:
+            if (record->event.pressed) {
+                tap_code16(KC_P0);
+                tap_code16(KC_P0);
+            }
+            return false; // Skip all further processing of this key
+        default:
+            return true; // Process all other keycodes normally
+    }
+}
