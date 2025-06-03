@@ -8,7 +8,15 @@
     },
   "lighting": "vialrgb",
     "customKeycodes": [
-        {"name": "00", "title": "00", "shortName": "00"}
+      { "name": "Mission Ctrl", "title": "Mission Control in macOS", "shortName": "MCtrl" },
+      { "name": "Launch Pad",   "title": "Launch Pad in macOS",      "shortName": "LPad" },
+      { "name": "Left Option",  "title": "Left Option in macOS",     "shortName": "LOpt" },
+      { "name": "Right Option", "title": "Right Option in macOS",    "shortName": "ROpt" },
+      { "name": "Left Cmd",     "title": "Left Command in macOS",    "shortName": "LCmd" },
+      { "name": "Right Cmd",    "title": "Right Command in macOS",   "shortName": "RCmd" },
+      { "name": "Siri",         "title": "Siri in macOS",            "shortName": "Siri" },
+      { "name": "00",           "title": "00",                       "shortName": "00" },
+      { "name": "Alt-Tab",      "title": "Super ALT↯TAB",            "shortName": "ALTab" }
     ],
   "layouts": {
     "keymap":[
