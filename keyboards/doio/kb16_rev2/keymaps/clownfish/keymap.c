@@ -45,7 +45,11 @@ enum my_keycodes {
     DBL_0 = NEW_SAFE_RANGE,
     ALT_TAB,
     EXTEND,
-    SIMPLGT
+    SIMPLGT,
+    RMD_PLN,
+    RMD_BOX,
+    RMD_SRL,
+    RMD_CENT
 };
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -77,20 +81,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
 
 /*  WIN
-       ┌────┬────┬────┬────┐    NUM|MAC       WHL↑|WHL↓
+       ┌────┬────┬────┬────┐    NUM|MAC       Vol-|Vol+
        │Esc │Copy│Pste│Bksp│    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │MS 3│
+       ├────┼────┼────┼────┤    │Togg│         │Mute│
        │ATab│Tab │ ↑  │Ent │    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │Shft│ ←  │ ↓  │ →  │          Vol-|Vol+
+       │Shft│ ←  │ ↓  │ →  │          WHL↑|WHL↓
        ├────┼────┼────┼────┤           ┌────┐
-       │Ctrl│Win │Alt │ Fn │           │Mute│
+       │Ctrl│Win │Alt │ Fn │           │MS 3│
        └────┴────┴────┴────┘           └────┘
 */
     [WIN] = LAYOUT(
                 KC_ESC,  C(KC_C), C(KC_V), KC_BSPC, RM_TOGG,
-                ALT_TAB, KC_TAB,  KC_UP,   KC_ENT,  MS_BTN3,
-                KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE,
+                ALT_TAB, KC_TAB,  KC_UP,   KC_ENT,  KC_MUTE,
+                KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, MS_BTN3,
                 KC_LCTL, KC_LGUI, KC_LALT, MO(WIN_FN)
             ),
 
@@ -106,27 +110,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        └────┴────┴────┴────┘           └────┘
 */
     [WIN_FN] = LAYOUT(
-                G(KC_D),       C(KC_X),    C(KC_Z),       G(KC_I),    _______,
+                G(KC_D),       C(KC_X),    C(KC_Z),       G(KC_I),    RM_TOGG,
                 KC_CALC,       G(KC_E),    G(S(KC_UP)),   G(KC_A),    EXTEND,
-                G(S(KC_S)),    G(KC_LEFT), G(S(KC_DOWN)), G(KC_RGHT), _______,
-                G(C(KC_LEFT)), G(C(KC_D)), G(C(KC_RGHT)), _______
+                G(S(KC_S)),    G(KC_LEFT), G(S(KC_DOWN)), G(KC_RGHT), KC_MUTE,
+                G(C(KC_LEFT)), G(C(KC_D)), G(C(KC_RGHT)), KC_TRNS
             ),
 
 /*  MAC
-       ┌────┬────┬────┬────┐    WIN|MEDIA     WHL↑|WHL↓
+       ┌────┬────┬────┬────┐    WIN|MEDIA     Vol-|Vol+
        │Esc │Copy│Pste│Bksp│    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │MS 3│
+       ├────┼────┼────┼────┤    │Togg│         │Mute│
        │ATab│Tab │ ↑  │Ent │    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │Shft│ ←  │ ↓  │ →  │          Vol-|Vol+
+       │Shft│ ←  │ ↓  │ →  │          WHL↑|WHL↓
        ├────┼────┼────┼────┤           ┌────┐
-       │Ctrl│Win │Alt │ Fn │           │Mute│
+       │Ctrl│Win │Alt │ Fn │           │MS 3│
        └────┴────┴────┴────┘           └────┘
 */
     [MAC] = LAYOUT(
                 KC_ESC,  G(KC_C), G(KC_V), KC_BSPC, RM_TOGG,
-                ALT_TAB, KC_TAB,  KC_UP,   KC_ENT,  MS_BTN3,
-                KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE,
+                ALT_TAB, KC_TAB,  KC_UP,   KC_ENT,  KC_MUTE,
+                KC_LSFT, KC_LEFT, KC_DOWN, KC_RGHT, MS_BTN3,
                 KC_LCTL, KC_LOPT, KC_LCMD, MO(MAC_FN)
             ),
 
@@ -142,82 +146,82 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        └────┴────┴────┴────┘           └────┘
 */
     [MAC_FN] = LAYOUT(
-                G(A(KC_M)),    G(KC_X),       G(KC_Z),       G(A(KC_SPC)),  _______,
-                G(KC_GRV),     KC_LPAD,       C(A(KC_UP)),   KC_MCTL,       _______,
-                G(S(KC_4)),    C(A(KC_LEFT)), G(KC_M),       C(A(KC_LEFT)), _______,
-                C(KC_LEFT),    C(KC_UP),      C(KC_RGHT),    _______
+                G(A(KC_M)),    G(KC_X),       G(KC_Z),       G(A(KC_SPC)),  RM_TOGG,
+                G(KC_GRV),     KC_LPAD,       C(A(KC_UP)),   KC_MCTL,       MS_BTN3,
+                G(S(KC_4)),    C(A(KC_LEFT)), G(KC_M),       C(A(KC_LEFT)), KC_MUTE,
+                C(KC_LEFT),    C(KC_UP),      C(KC_RGHT),    KC_TRNS
             ),
 
 /*  MEDIA
        ┌────┬────┬────┬────┐    MAC|BROWSER   Prev|Next
-       │Stop│Play│Prev│Next│    ┌────┐         ┌────┐
+       │Esc │Tab │Stop│MPlr│    ┌────┐         ┌────┐
        ├────┼────┼────┼────┤    │Togg│         │Play│
-       │Vol+│ RW │ ↑  │ FF │    └────┘         └────┘
+       │Ejct│ RW │ ↑  │ FF │    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │Vol-│ ←  │ ↓  │ →  │          Vol-|Vol+
+       │Ent │ ←  │ ↓  │ →  │          Vol-|Vol+
        ├────┼────┼────┼────┤           ┌────┐
-       │Mute│Tab │Ejct│Ent │           │Mute│
+       │Spce│Prev│Play│Next│           │Mute│
        └────┴────┴────┴────┘           └────┘
 */
     [MEDIA] = LAYOUT(
-                _______, _______, _______, _______, RM_TOGG,
-                _______, _______, _______, _______, KC_MPLY,
-                _______, _______, _______, _______, KC_MUTE,
-                _______, _______, _______, _______
+                KC_ESC,  KC_TAB,  KC_MSTP, KC_MSEL, RM_TOGG,
+                KC_EJCT, KC_MRWD, KC_UP,   KC_MFFD, KC_MPLY,
+                KC_ENT,  KC_LEFT, KC_DOWN, KC_RGHT, KC_MUTE,
+                KC_SPC,  KC_MPRV, KC_MPLY, KC_MNXT
             ),
 
 /*  BROWSER
        ┌────┬────┬────┬────┐  MEDIA|DISCORD   Back|Fwd
-       │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
+       │Home│Srch│Favs│Find│    ┌────┐         ┌────┐
        ├────┼────┼────┼────┤    │Togg│         │Home│
-       │ 4  │ 5  │ 6  │ -  │    └────┘         └────┘
+       │Refr│FlSc│Srce│DVew│    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │ +  │         Tabs-|Tabs+
+       │Refr│Stop│Back│Fwd │         Tabs-|Tabs+
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │Ent │           │NTab│
+       │nTab│nWin│Addr│rTab│           │NTab│
        └────┴────┴────┴────┘           └────┘
 */
     [BROWSER] = LAYOUT(
-                _______, _______, _______, _______, RM_TOGG,
-                _______, _______, _______, _______, KC_WHOM,
-                _______, _______, _______, _______, C(KC_TAB),
-                _______, _______, _______, _______
+                KC_WHOM, KC_WSCH, KC_WFAV, C(KC_F), RM_TOGG,
+                KC_F5,   KC_F11,  C(KC_U), KC_F12,  KC_WHOM,
+                KC_WREF, KC_WSTP, KC_WBAK, KC_WFWD, C(KC_TAB),
+                C(KC_T), C(KC_N), KC_F6,   C(S(KC_T))
             ),
 
 /*  DISCORD
-       ┌────┬────┬────┬────┐BROWSER|MOUSE     WHL↑|WHL↓
-       │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │MS 3│
-       │ 4  │ 5  │ 6  │ -  │    └────┘         └────┘
+       ┌────┬────┬────┬────┐BROWSER|MOUSE     Vol-|Vol+
+       │Esc │Reac│DMs │Unrd│    ┌────┐         ┌────┐
+       ├────┼────┼────┼────┤    │Togg│         │Mute│
+       │Svr-│Ch- │ChU-│PgUp│    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │ +  │          Vol-|Vol+
+       │Svr+│Ch+ │ChU+│PgDn│          WHL↑|WHL↓
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │Ent │           │Mute│
+       │Mtn-│Mtn+│Reac│Curr│           │MS 1│
        └────┴────┴────┴────┘           └────┘
 */
     [DISCORD] = LAYOUT(
-                _______, _______, _______, _______, RM_TOGG,
-                _______, _______, _______, _______, _______,
-                _______, _______, _______, _______, _______,
-                _______, _______, _______, _______
+                KC_ESC,         KC_PPLS,          C(A(KC_RGHT)), S(KC_PGUP),  RM_TOGG,
+                C(A(KC_UP)),    A(KC_UP),         S(A(KC_UP)),   KC_PGUP,     KC_MUTE,
+                C(A(KC_DOWN)),  A(KC_DOWN),       S(A(KC_DOWN)), KC_PGDN,     MS_BTN1,
+                C(A(S(KC_UP))), C(A(S(KC_DOWN))), KC_PPLS,       S(KC_PGDN)
             ),
 
 /*  MOUSE
-       ┌────┬────┬────┬────┐DISCORD|GAME     WHL↑|WHL↓
-       │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
+       ┌────┬────┬────┬────┐DISCORD|GAME      WHL←|WHL→
+       │Btn7│Acl0│Acl1│Acl2│    ┌────┐         ┌────┐
        ├────┼────┼────┼────┤    │Togg│         │MS 3│
-       │ 4  │ 5  │ 6  │ -  │    └────┘         └────┘
+       │Btn6│Btn1│Ms↑ │Btn2│    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │ +  │          Vol-|Vol+
+       │Btn5│Ms← │Ms↓ │Ms→ │          WHL↑|WHL↓
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │Ent │           │Mute│
+       │Btn4│Btn1│Btn3│Btn2│           │MS 3│
        └────┴────┴────┴────┘           └────┘
 */
     [MOUSE] = LAYOUT(
-                _______, _______, _______, _______, RM_TOGG,
-                _______, _______, _______, _______, _______,
-                _______, _______, _______, _______, _______,
-                _______, _______, _______, _______
+                MS_BTN7, MS_ACL0, MS_ACL1, MS_ACL2, RM_TOGG,
+                MS_BTN6, MS_BTN1, MS_UP,   MS_BTN2, MS_BTN3,
+                MS_BTN5, MS_LEFT, MS_DOWN, MS_RGHT, MS_BTN3,
+                MS_BTN4, MS_BTN1, MS_BTN3, MS_BTN2
             ),
 
 /*  GAME
@@ -235,7 +239,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 _______, _______, _______, _______, RM_TOGG,
                 _______, _______, _______, _______, _______,
                 _______, _______, _______, _______, _______,
-                _______, _______, _______, _______
+                _______, _______, _______, MO(GAME_FN)
             ),
 
 /*  GAME_FN
@@ -253,25 +257,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                 _______, _______, _______, _______, RM_TOGG,
                 _______, _______, _______, _______, _______,
                 _______, _______, _______, _______, _______,
-                _______, _______, _______, _______
+                _______, _______, _______, KC_TRNS
             ),
 
 /*  LIGHT
-       ┌────┬────┬────┬────┐   GAME|NUM       WHL↑|WHL↓
+       ┌────┬────┬────┬────┐   GAME|NUM       Ani-|Ani+
        │Sat+│Val+│Spd+│Togg│    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │    │
-       │ 4  │ 5  │ 6  │Ani+│    └────┘         └────┘
+       ├────┼────┼────┼────┤    │Togg│         │Simp│
+       │Hue-│Simp│Hue+│Ani+│    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │Ani-│          Val-|Val+
+       │Sat-│Val-│Spd-│Ani-│          Val-|Val+
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │    │           │    │
+       │Pln │Box │Swrl│Cent│           │Togg│
        └────┴────┴────┴────┘           └────┘
 */
     [LIGHT] = LAYOUT(
                 RM_SATU, RM_VALU, RM_SPDU, RM_TOGG, RM_TOGG,
-                RM_HUED, XXXXXXX, RM_HUEU, RM_NEXT, XXXXXXX,
-                RM_SATD, RM_VALD, RM_SPDD, RM_PREV, XXXXXXX,
-                XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+                RM_HUED, SIMPLGT, RM_HUEU, RM_NEXT, SIMPLGT,
+                RM_SATD, RM_VALD, RM_SPDD, RM_PREV, RM_TOGG,
+                RMD_PLN, RMD_BOX, RMD_SRL, RMD_CENT
             ),
 };
 
@@ -279,16 +283,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [NUM]      = { ENCODER_CCW_CW(TO(LIGHT),   TO(WIN)),     ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [WIN]      = { ENCODER_CCW_CW(TO(NUM),     TO(MAC)),     ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [WIN_FN]   = { ENCODER_CCW_CW(_______,     _______),     ENCODER_CCW_CW(KC_BRID, KC_BRIU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [WIN_FN]   = { ENCODER_CCW_CW(TO(NUM),     TO(MAC)),     ENCODER_CCW_CW(KC_BRID, KC_BRIU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [MAC]      = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)),   ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [MAC_FN]   = { ENCODER_CCW_CW(_______,     _______),     ENCODER_CCW_CW(KC_SCRL, KC_PAUS), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [MAC_FN]   = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)), ENCODER_CCW_CW(KC_SCRL, KC_PAUS), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [MEDIA]    = { ENCODER_CCW_CW(TO(MAC),     TO(BROWSER)), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [BROWSER]  = { ENCODER_CCW_CW(TO(MEDIA),   TO(DISCORD)), ENCODER_CCW_CW(KC_WBAK, KC_WFWD), ENCODER_CCW_CW(C(S(KC_TAB)), C(KC_TAB)) },
-    [DISCORD]  = { ENCODER_CCW_CW(TO(BROWSER), TO(MOUSE)),   ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [MOUSE]    = { ENCODER_CCW_CW(TO(DISCORD), TO(GAME)),    ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [GAME]     = { ENCODER_CCW_CW(TO(MOUSE),   TO(LIGHT)),   ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [GAME_FN]  = { ENCODER_CCW_CW(_______,     _______),     ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
-    [LIGHT]    = { ENCODER_CCW_CW(TO(GAME),    TO(NUM)),     ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(_______, _______) },
+    [DISCORD]  = { ENCODER_CCW_CW(TO(BROWSER), TO(MOUSE)),   ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
+    [MOUSE]    = { ENCODER_CCW_CW(TO(DISCORD), TO(GAME)),    ENCODER_CCW_CW(MS_WHLL, MS_WHLR), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
+    [GAME]     = { ENCODER_CCW_CW(TO(MOUSE),   TO(LIGHT)),   ENCODER_CCW_CW(MS_WHLL, MS_WHLR), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
+    [GAME_FN]  = { ENCODER_CCW_CW(TO(MOUSE),   TO(LIGHT)),   ENCODER_CCW_CW(_______, _______), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [LIGHT]    = { ENCODER_CCW_CW(TO(GAME),    TO(NUM)),     ENCODER_CCW_CW(RM_PREV, RM_NEXT), ENCODER_CCW_CW(RM_VALD, RM_VALU) },
 
 };
 #endif
@@ -317,11 +321,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
             return false;
-        case DBL_0:
-            if (record->event.pressed) {
-                SEND_STRING_DELAY("00", 50);
-            }
-            return false;
         case SIMPLGT:
             if (record->event.pressed) {
                 switch(rgb_matrix_get_mode()) {
@@ -348,9 +347,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     }
             }
             return false;
+        case DBL_0:
+            if (record->event.pressed) {
+                SEND_STRING_DELAY("00", 50);
+            }
+            return false;
+        case RMD_PLN:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_SOLID_COLOR);
+            }
+            return false;
+        case RMD_BOX:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_ALPHAS_MODS);
+            }
+            return false;
+        case RMD_SRL:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_RAINBOW_PINWHEELS);
+            }
+            return false;
+        case RMD_CENT:
+            if (record->event.pressed) {
+                rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN);
+            }
+            return false;
         case EXTEND:
             if (record->event.pressed) {
-                SEND_STRING(SS_LGUI("P") SS_DELAY(400) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(200) SS_TAP(X_ESC) );
+                SEND_STRING(SS_LGUI("p") SS_DELAY(400) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(200) SS_TAP(X_ESC) );
             }
             return false;
         default:
