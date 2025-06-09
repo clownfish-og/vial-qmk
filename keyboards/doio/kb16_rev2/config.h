@@ -31,6 +31,6 @@
     #undef WEAR_LEVELING_BACKING_SIZE
 #endif
 
-#define WEAR_LEVELING_BACKING_SIZE	2*1024*10 // 20kB for 10kB of logical data
+#define WEAR_LEVELING_BACKING_SIZE	2*1024*8 // 16kB for 8kB of logical data
 #define DYNAMIC_KEYMAP_LAYER_COUNT 12
 #define DYNAMIC_KEYMAP_MACRO_COUNT 64

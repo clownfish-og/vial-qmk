@@ -20,9 +20,6 @@
 // OLED animation
 #include "lib/layer_status/layer_status.h"
 
-// Mac Keycodes
-#include "lib/mac/mac_codes.h"
-
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -41,8 +38,23 @@ enum my_layers {
     GAME_FN,
     LIGHT
 };
+const char *layers[] = {
+    "NUMPAD",
+    "WINDOWS",
+    "WIN_FN",
+    "MACOS",
+    "MAC_FN",
+    "MEDIA",
+    "BROWSER",
+    "DISCORD",
+    "MOUSE",
+    "GAME",
+    "GAME_FN",
+    "LIGHTING"
+};
+
 enum my_keycodes {
-    DBL_0 = NEW_SAFE_RANGE,
+    DBL_0 = QK_KB,
     ALT_TAB,
     EXTEND,
     SIMPLGT,
@@ -54,15 +66,6 @@ enum my_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /*  NUM
-       ┌───┬───┬───┬───┐   ┌───┐ ┌───┐
-       │ 7 │ 8 │ 9 │ 4 │   │Ply│ │TO1│
-       ├───┼───┼───┼───┤   └───┘ └───┘
-       │ 4 │ 5 │ 6 │ 8 │
-       ├───┼───┼───┼───┤
-       │ 1 │ 2 │ ↑ │Ent│      ┌───┐
-       ├───┼───┼───┼───┤      │Mute
-       │Fn2│ ← │ ↓ │ → │      └───┘
-       └───┴───┴───┴───┘
        ┌────┬────┬────┬────┐  LIGHT|WIN       WHL↑|WHL↓
        │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
        ├────┼────┼────┼────┤    │Togg│         │MS 3│
@@ -225,14 +228,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
 
 /*  GAME
-       ┌────┬────┬────┬────┐ MOUSE|LIGHT     WHL↑|WHL↓
-       │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │MS 3│
-       │ 4  │ 5  │ 6  │ -  │    └────┘         └────┘
+       ┌────┬────┬────┬────┐ MOUSE|LIGHT      WHL←|WHL→
+       │    │    │    │    │    ┌────┐         ┌────┐
+       ├────┼────┼────┼────┤    │Togg│         │    │
+       │    │    │    │    │    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │ +  │          Vol-|Vol+
+       │    │    │    │    │          WHL↑|WHL↓
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │Ent │           │Mute│
+       │    │    │    │    │           │    │
        └────┴────┴────┴────┘           └────┘
 */
     [GAME] = LAYOUT(
@@ -243,20 +246,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
             ),
 
 /*  GAME_FN
-       ┌────┬────┬────┬────┐  MOUSE|LIGHT     WHL↑|WHL↓
-       │ 7  │ 8  │ 9  │Num │    ┌────┐         ┌────┐
-       ├────┼────┼────┼────┤    │Togg│         │MS 3│
-       │ 4  │ 5  │ 6  │ -  │    └────┘         └────┘
+       ┌────┬────┬────┬────┐  MOUSE|LIGHT     WHL←|WHL→
+       │    │    │    │    │    ┌────┐         ┌────┐
+       ├────┼────┼────┼────┤    │Togg│         │    │
+       │    │    │    │    │    └────┘         └────┘
        ├────┼────┼────┼────┤
-       │ 1  │ 2  │ 3  │ +  │          Vol-|Vol+
+       │    │    │    │    │          Vol-|Vol+
        ├────┼────┼────┼────┤           ┌────┐
-       │ 0  │ 00 │ .  │Ent │           │Mute│
+       │    │    │    │ ▼  │           │Mute│
        └────┴────┴────┴────┘           └────┘
 */
     [GAME_FN] = LAYOUT(
                 _______, _______, _______, _______, RM_TOGG,
                 _______, _______, _______, _______, _______,
-                _______, _______, _______, _______, _______,
+                _______, _______, _______, _______, KC_MUTE,
                 _______, _______, _______, KC_TRNS
             ),
 
@@ -282,10 +285,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef ENCODER_MAP_ENABLE
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
     [NUM]      = { ENCODER_CCW_CW(TO(LIGHT),   TO(WIN)),     ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [WIN]      = { ENCODER_CCW_CW(TO(NUM),     TO(MAC)),     ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [WIN]      = { ENCODER_CCW_CW(TO(NUM),     TO(MAC)),     ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
     [WIN_FN]   = { ENCODER_CCW_CW(TO(NUM),     TO(MAC)),     ENCODER_CCW_CW(KC_BRID, KC_BRIU), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [MAC]      = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)),   ENCODER_CCW_CW(MS_WHLU, MS_WHLD), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
-    [MAC_FN]   = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)), ENCODER_CCW_CW(KC_SCRL, KC_PAUS), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+    [MAC]      = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)),   ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
+    [MAC_FN]   = { ENCODER_CCW_CW(TO(WIN),     TO(MEDIA)),   ENCODER_CCW_CW(KC_SCRL, KC_PAUS), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [MEDIA]    = { ENCODER_CCW_CW(TO(MAC),     TO(BROWSER)), ENCODER_CCW_CW(KC_MPRV, KC_MNXT), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
     [BROWSER]  = { ENCODER_CCW_CW(TO(MEDIA),   TO(DISCORD)), ENCODER_CCW_CW(KC_WBAK, KC_WFWD), ENCODER_CCW_CW(C(S(KC_TAB)), C(KC_TAB)) },
     [DISCORD]  = { ENCODER_CCW_CW(TO(BROWSER), TO(MOUSE)),   ENCODER_CCW_CW(KC_VOLD, KC_VOLU), ENCODER_CCW_CW(MS_WHLU, MS_WHLD) },
@@ -301,9 +304,6 @@ bool is_alt_tab_active = false;
 uint16_t alt_tab_timer = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (!process_record_mac(keycode, record)) {
-        return false;
-    }
     switch (keycode) {
         case ALT_TAB: // Super ALT↯TAB processing
         if (record->event.pressed) {
@@ -321,7 +321,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
         }
             return false;
-        case SIMPLGT:
+        case SIMPLGT: // Simplified personal preferred lighting mode switching
             if (record->event.pressed) {
                 switch(rgb_matrix_get_mode()) {
                     case RGB_MATRIX_GRADIENT_UP_DOWN:
@@ -372,7 +372,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 rgb_matrix_mode(RGB_MATRIX_CYCLE_OUT_IN);
             }
             return false;
-        case EXTEND:
+        case EXTEND: // Extended desktop (Win+P)
             if (record->event.pressed) {
                 SEND_STRING(SS_LGUI("p") SS_DELAY(400) SS_TAP(X_DOWN) SS_DELAY(100) SS_TAP(X_DOWN) SS_DELAY(200) SS_TAP(X_ENT) SS_DELAY(200) SS_TAP(X_ESC) );
             }
@@ -393,12 +393,9 @@ void matrix_scan_user(void) {
 
 #ifdef OLED_ENABLE
     bool oled_task_user(void) {
+        oled_write_ln(layers[get_highest_layer(layer_state)], false);
         render_layer_status();
 
         return true;
     }
 #endif
-
-void housekeeping_task_user(void) {
-    housekeeping_task_mac();
-}

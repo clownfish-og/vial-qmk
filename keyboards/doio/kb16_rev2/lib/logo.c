@@ -18,7 +18,7 @@
 #include "oled_driver.h"
 #include "progmem.h"
 
-#define ANIM_SIZE 525  // number of bytes in array, minimize for adequate firmware size, max is 1024
+#define ANIM_SIZE 512  // number of bytes in array, minimize for adequate firmware size, max is 1024
 
 void render_logo(void) {
     static const char PROGMEM doio[][ANIM_SIZE] = {
@@ -58,5 +58,5 @@ void render_logo(void) {
         }
     };
 
-    oled_write_raw_P(doio[0], ANIM_SIZE);
+    oled_write_raw(doio[0], ANIM_SIZE);
 }
