@@ -1,13 +1,15 @@
 # BUPpad25 25-key Macropad RGB Backlight Hot Swap Mechanical Keyboard
 
 Keyboard (Winry25T) from
+
 * [SpiderIsland](https://www.aliexpress.com/store/1101348633) on AliExpress (reseller). Seller provides [kbfirmware](https://kbfirmware.com/) JSON config that was converted to QMK.
 
 * Keyboard Maintainer: [clownfish-og](https://github.com/clownfish-og)
 
 * Hardware Availability:  
-https://aliexpress.com/item/1005001523579896.html  
-https://www.aliexpress.us/item/3256803335473804.html  
+
+<https://aliexpress.com/item/1005001523579896.html>  
+<https://www.aliexpress.us/item/3256803335473804.html>  
 
 Make example for this keyboard (after setting up your build environment and placing buppad folder in qmk_firmware/keyboards):
 

@@ -1,7 +1,7 @@
 {
-    "manufacturer": "SpiderIsland",
+    "manufacturer": "Big Bup",
     "keyboard_name": "BUPpad25",
-    "maintainer": "clownfish-og",
+    "maintainer": "ClownFish",
     "bootloader": "atmel-dfu",
     "build": {
         "lto": true

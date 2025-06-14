@@ -1,7 +1,7 @@
 {
-    "manufacturer": "YMDK",
+    "manufacturer": "Big Bup",
     "keyboard_name": "BUPpad09",
-    "maintainer": "clownfish-og",
+    "maintainer": "ClownFish",
     "bootloader": "atmel-dfu",
     "build": {
         "lto": true
@@ -12,8 +12,6 @@
     },
     "features": {
         "bootmagic": true,
-        "command": false,
-        "console": false,
         "extrakey": true,
         "mousekey": true,
         "nkro": true,

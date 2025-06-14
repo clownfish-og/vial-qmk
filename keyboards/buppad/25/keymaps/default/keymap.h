@@ -1,24 +1,11 @@
-/* Copyright 2024 ClownFish (@clownfish-og)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+// Copyright (C) 2024 ClownFish (@clownfish-og)
+// SPDX-License-Identifier: GPL-2.0-or-later
 
  #pragma once
  #include "25.h"
 
  enum custom_keycodes {
-    AMNESIA = FIRST_EMOTE,  // start_bup, Tier 1
+    AMNESIA = FIRST_EMOTE,  // Tier 1, bup_start
     AYO,        // Tier 1
     BACKDOOR,   // Tier 1
     BALLOON,    // Tier 1
@@ -98,6 +85,7 @@
     ABDUCKTION, // bitstier
     ASCEND,     // bitstier
     ASHDUCKEM,  // bitstier
+    DEMAYO,     // bitstier
     EXCUSEME,   // bitstier
     FANCYDUCK,  // bitstier
     GOLD,       // bitstier
@@ -110,7 +98,7 @@
     TIEDYE,     // Follower
     TUNE,       // Follower
     UP,         // Follower
-    WAVE,       // end_bup, Follower
+    WAVE,       // Follower, bup_end
     BOP,            // Start Twitch Global Emotes
     BOPBOP,         // Twitch Global Emote
     DINODANCE,      // Twitch Global Emote
