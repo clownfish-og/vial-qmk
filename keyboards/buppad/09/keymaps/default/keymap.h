@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
  #pragma once
- #include "25.h"
+ #include "09.h"
 
  enum custom_keycodes {
-    AMNESIA = FIRST_EMOTE,  // start_bup, Tier 1
+    AMNESIA = FIRST_EMOTE,  // Tier 1, bup_start
     AYO,        // Tier 1
     BACKDOOR,   // Tier 1
     BALLOON,    // Tier 1
@@ -98,7 +98,7 @@
     TIEDYE,     // Follower
     TUNE,       // Follower
     UP,         // Follower
-    WAVE,       // end_bup, Follower
+    WAVE,       // Follower, bup_end
     BOP,            // Start Twitch Global Emotes
     BOPBOP,         // Twitch Global Emote
     DINODANCE,      // Twitch Global Emote
@@ -121,12 +121,12 @@
     UNITY,          // Twitch Global Emote
     VOTENAY,        // Twitch Global Emote
     VOTEYEA,        // End Twitch Global Emotes
-    BDANCE,     // start_bex
+    BDANCE,     // bex_start
     BMINGO,     // bex
     BMONKEY,    // bex
     BPUG,       // bex
-    BUGH,       // end_bex
-    KCLAP,      // start_ktlu
+    BUGH,       // bex_end
+    KCLAP,      // ktlu_start
     KGATO,      // ktlu
     KGGS,       // ktlu
     KGLUTES,    // ktlu
@@ -135,25 +135,25 @@
     KLEI,       // ktlu
     KLOVE,      // ktlu
     KRDNC,      // ktlu
-    KSMUG,      // end_ktlu
-    WBONGO,     // start_werty
+    KSMUG,      // ktlu_end
+    WBONGO,     // werty_start
     WCLNFSH,    // werty
     WEXCITE,    // werty
     WGLUTES,    // werty
     WHRTBT,     // werty
     WHIYA,      // werty
-    WGRIN,      // werty
-    KYCFOG,     // werty
-    KYPOLR,     // end_werty
-    KYSMNK,     // start_koby
+    WGRIN,      // werty_end
+    KYCFOG,     // koby_start
+    KYPOLR,     // koby
+    KYSMNK,     // koby
     KYYES,      // koby
     KYLGHT,     // koby
-    KYHART,     // end_koby
-    GPCFSW,     // start_gopro
+    KYHART,     // koby_end
+    GPCFSW,     // gopro_start
     GPLFG,      // gopro
     GPMNKY,     // gopro
     GPTUNE,     // gopro
-    GPGLCH,     // end_gopro
+    GPGLCH,     // gopro_end
     TTHIS,      // martino
     MKLOVE,     // mrkitty
     ETGOLD      // etown
