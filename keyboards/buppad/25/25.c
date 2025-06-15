@@ -61,23 +61,24 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
-    if (!rgb_matrix_indicators_advanced_user(led_min, led_max)) {  // allow user function to run ( __attribute__((weak)) )
+bool rgb_matrix_indicators_kb() {
+    if (!rgb_matrix_indicators_user()) {  // allow user function to run ( __attribute__((weak)) )
         return false;
     }
 
     //  Define an assortment of HSV values for indicators and convert HSV to RGB (important for limiting brightness with WS2812)
-    rgb_t rgb0 = hsv_to_rgb((hsv_t){200, 255, 200});                    // MAGENTA
-    rgb_t rgb1 = hsv_to_rgb((hsv_t){128, 255, 200});                    // CYAN
-    rgb_t rgb2 = hsv_to_rgb((hsv_t){170, 255, 200});                    // BLUE
-    rgb_t rgb2v = hsv_to_rgb((hsv_t){170, 255, rgb_matrix_get_val()});  // BLUE - BRIGHTNESS VARIES
-    rgb_t rgb3 = hsv_to_rgb((hsv_t){85, 255, 200});                     // GREEN
-    rgb_t rgb3v = hsv_to_rgb((hsv_t){85, 255, rgb_matrix_get_val()});   // GREEN - BRIGHTNESS VARIES
-    rgb_t rgb4 = hsv_to_rgb((hsv_t){43, 255, 200});                     // YELLOW
-    rgb_t rgb5 = hsv_to_rgb((hsv_t){0, 255, 200});                      // RED
-    rgb_t rgb5v = hsv_to_rgb((hsv_t){0, 255, rgb_matrix_get_val()});    // RED - BRIGHTNESS VARIES
-    rgb_t rgb6 = hsv_to_rgb((hsv_t){0, 0, 200});                        // WHITE
-    rgb_t rgb6v = hsv_to_rgb((hsv_t){0, 0, rgb_matrix_get_val()});      // WHITE - BRIGHTNESS VARIES
+    //                                 .h   .s    .v
+    rgb_t magenta = hsv_to_rgb((hsv_t){200, 255, 200});                   // MAGENTA
+    rgb_t cyan    = hsv_to_rgb((hsv_t){128, 255, 200});                   // CYAN
+    rgb_t blue    = hsv_to_rgb((hsv_t){170, 255, 200});                   // BLUE
+    rgb_t blue_v  = hsv_to_rgb((hsv_t){170, 255, rgb_matrix_get_val()});  // BLUE - BRIGHTNESS VARIES
+    rgb_t green   = hsv_to_rgb((hsv_t){85,  255, 200});                   // GREEN
+    rgb_t green_v = hsv_to_rgb((hsv_t){85,  255, rgb_matrix_get_val()});  // GREEN - BRIGHTNESS VARIES
+    rgb_t yellow  = hsv_to_rgb((hsv_t){43,  255, 200});                   // YELLOW
+    rgb_t red     = hsv_to_rgb((hsv_t){0,   255, 200});                   // RED
+    rgb_t red_v   = hsv_to_rgb((hsv_t){0,   255, rgb_matrix_get_val()});  // RED - BRIGHTNESS VARIES
+    rgb_t white   = hsv_to_rgb((hsv_t){0,   0,   200});                   // WHITE
+    rgb_t white_v = hsv_to_rgb((hsv_t){0,   0,   rgb_matrix_get_val()});  // WHITE - BRIGHTNESS VARIES
 
         // Determine the active layer
         uint8_t active_layer = get_highest_layer(layer_state);
@@ -102,65 +103,63 @@ bool rgb_matrix_indicators_advanced_kb(uint8_t led_min, uint8_t led_max) {
     */
 
     // Set indicator LEDs
-    for (uint8_t i = led_min; i < led_max; i++) {
-        switch (active_layer) {
-            case 0:
-                rgb_matrix_set_color(20, rgb0.r, rgb0.g, rgb0.b);  // TO(1) MAGENTA
-                break;
-            case 1:
-                rgb_matrix_set_color(21, rgb1.r, rgb1.g, rgb1.b);  // TO(5) CYAN
-                break;
-            case 2:
-                rgb_matrix_set_color(22, rgb2.r, rgb2.g, rgb2.b);  // TO(5) BLUE
-                break;
-            case 3:
-                rgb_matrix_set_color(23, rgb3.r, rgb3.g, rgb3.b);  // TO(5) GREEN
-                break;
-            case 4:
-                rgb_matrix_set_color(24, rgb4.r, rgb4.g, rgb4.b);  // TO(5) YELLOW
-                break;
-            case 5:                                             // RGB SETTINGS LAYER
-                rgb_matrix_set_color(16, rgb5v.r, rgb5v.g, rgb5v.b);  // TT(6) RED - BRIGHTNESS VARIES
-                rgb_matrix_set_color(20, rgb5.r, rgb5.g, rgb5.b);     // TOP ROW RED
-                rgb_matrix_set_color(21, rgb5.r, rgb5.g, rgb5.b);     // TOP ROW RED
-                rgb_matrix_set_color(22, rgb5.r, rgb5.g, rgb5.b);     // TOP ROW RED
-                rgb_matrix_set_color(23, rgb5.r, rgb5.g, rgb5.b);     // TOP ROW RED
-                rgb_matrix_set_color(24, rgb5.r, rgb5.g, rgb5.b);     // TOP ROW RED
-                break;
-            case 6:                                             // NUMPAD LAYER
-                if (!host_keyboard_led_state().num_lock) {          // NUMLOCK OFF
-                    rgb_matrix_set_color_all(rgb2v.r, rgb2v.g, rgb2v.b);  // ALL BLUE - BRIGHTNESS VARIES
-                    rgb_matrix_set_color(21, rgb6.r, rgb6.g, rgb6.b);     // NUMLOCK WHITE
-                    rgb_matrix_set_color(1, rgb3v.r, rgb3v.g, rgb3v.b);   // ARROW KEYS GREEN
-                    rgb_matrix_set_color(3, rgb3v.r, rgb3v.g, rgb3v.b);   // ARROW KEYS GREEN
-                    rgb_matrix_set_color(5, rgb3v.r, rgb3v.g, rgb3v.b);   // ARROW KEYS GREEN
-                    rgb_matrix_set_color(7, rgb3v.r, rgb3v.g, rgb3v.b);   // ARROW KEYS GREEN
-                    rgb_matrix_set_color(20, rgb0.r, rgb0.g, rgb0.b);     // TO(0) MAGENTA
-                    rgb_matrix_set_color(19, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(18, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(17, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(16, rgb5v.r, rgb5v.g, rgb5v.b);  // TT(6) RED - BRIGHTNESS VARIES
-                } else {                                            // NUMLOCK ON
-                    rgb_matrix_set_color_all(rgb6v.r, rgb6v.g, rgb6v.b);  // ALL WHITE - BRIGHTNESS VARIES
-                    rgb_matrix_set_color(21, rgb2.r, rgb2.g, rgb2.b);  // NUMLOCK BLUE
-                    rgb_matrix_set_color(20, rgb0.r, rgb0.g, rgb0.b);     // TO(0) MAGENTA
-                    rgb_matrix_set_color(19, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(18, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(17, RGB_BLACK);                  // LEFT COLUMN BLACK
-                    rgb_matrix_set_color(16, rgb5v.r, rgb5v.g, rgb5v.b);  // TT(6) RED - BRIGHTNESS VARIES
-                }
-                break;
-            case 7:
-                rgb_matrix_set_color(20, rgb0.r, rgb0.g, rgb0.b);  // TO(0) MAGENTA
-                rgb_matrix_set_color(21, rgb3.r, rgb3.g, rgb3.b);  // TOP ROW GREEN
-                rgb_matrix_set_color(22, rgb3.r, rgb3.g, rgb3.b);  // TOP ROW GREEN
-                rgb_matrix_set_color(23, rgb3.r, rgb3.g, rgb3.b);  // TOP ROW GREEN
-                rgb_matrix_set_color(24, rgb3.r, rgb3.g, rgb3.b);  // TOP ROW GREEN
-                break;
-            default:
-                rgb_matrix_set_color_all(RGB_BLACK);
-                break;
-        }
+    switch (active_layer) {
+        case 0:
+            rgb_matrix_set_color(20, magenta.r, magenta.g, magenta.b);  // TO(1) MAGENTA
+            break;
+        case 1:
+            rgb_matrix_set_color(21, cyan.r, cyan.g, cyan.b);  // TO(5) CYAN
+            break;
+        case 2:
+            rgb_matrix_set_color(22, blue.r, blue.g, blue.b);  // TO(5) BLUE
+            break;
+        case 3:
+            rgb_matrix_set_color(23, green.r, green.g, green.b);  // TO(5) GREEN
+            break;
+        case 4:
+            rgb_matrix_set_color(24, yellow.r, yellow.g, yellow.b);  // TO(5) YELLOW
+            break;
+        case 5:                                             // RGB SETTINGS LAYER
+            rgb_matrix_set_color(16, red_v.r, red_v.g, red_v.b);  // TT(6) RED - BRIGHTNESS VARIES
+            rgb_matrix_set_color(20, red.r,   red.g,   red.b);     // TOP ROW RED
+            rgb_matrix_set_color(21, red.r,   red.g,   red.b);     // TOP ROW RED
+            rgb_matrix_set_color(22, red.r,   red.g,   red.b);     // TOP ROW RED
+            rgb_matrix_set_color(23, red.r,   red.g,   red.b);     // TOP ROW RED
+            rgb_matrix_set_color(24, red.r,   red.g,   red.b);     // TOP ROW RED
+            break;
+        case 6:                                             // NUMPAD LAYER
+            if (!host_keyboard_led_state().num_lock) {          // NUMLOCK OFF
+                rgb_matrix_set_color_all(blue_v.r,  blue_v.g,  blue_v.b);  // ALL BLUE - BRIGHTNESS VARIES
+                rgb_matrix_set_color(21, white.r,   white.g,   white.b);     // NUMLOCK WHITE
+                rgb_matrix_set_color(1,  green_v.r, green_v.g, green_v.b);   // ARROW KEYS GREEN
+                rgb_matrix_set_color(3,  green_v.r, green_v.g, green_v.b);   // ARROW KEYS GREEN
+                rgb_matrix_set_color(5,  green_v.r, green_v.g, green_v.b);   // ARROW KEYS GREEN
+                rgb_matrix_set_color(7,  green_v.r, green_v.g, green_v.b);   // ARROW KEYS GREEN
+                rgb_matrix_set_color(20, magenta.r, magenta.g, magenta.b);   // TO(0) MAGENTA
+                rgb_matrix_set_color(19, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(18, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(17, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(16, red_v.r,   red_v.g,   red_v.b);  // TT(6) RED - BRIGHTNESS VARIES
+            } else {                                            // NUMLOCK ON
+                rgb_matrix_set_color_all(white_v.r, white_v.g, white_v.b);  // ALL WHITE - BRIGHTNESS VARIES
+                rgb_matrix_set_color(21, blue.r,    blue.g,    blue.b);     // NUMLOCK BLUE
+                rgb_matrix_set_color(20, magenta.r, magenta.g, magenta.b);  // TO(0) MAGENTA
+                rgb_matrix_set_color(19, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(18, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(17, RGB_BLACK);                  // LEFT COLUMN BLACK
+                rgb_matrix_set_color(16, red_v.r,   red_v.g,   red_v.b);  // TT(6) RED - BRIGHTNESS VARIES
+            }
+            break;
+        case 7:
+            rgb_matrix_set_color(20, magenta.r, magenta.g, magenta.b);  // TO(0) MAGENTA
+            rgb_matrix_set_color(21, green.r,   green.g,   green.b);  // TOP ROW GREEN
+            rgb_matrix_set_color(22, green.r,   green.g,   green.b);  // TOP ROW GREEN
+            rgb_matrix_set_color(23, green.r,   green.g,   green.b);  // TOP ROW GREEN
+            rgb_matrix_set_color(24, green.r,   green.g,   green.b);  // TOP ROW GREEN
+            break;
+        default:
+            rgb_matrix_set_color_all(RGB_BLACK);
+            break;
     }
     return false;
 }
